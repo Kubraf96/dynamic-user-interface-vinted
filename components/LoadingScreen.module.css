@@ -1,0 +1,13 @@
+.loadingScreen {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #014554;
+}
+
+.animation {
+  width: min(24rem, 75vw);
+  height: auto;
+}
