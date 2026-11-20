@@ -27,7 +27,7 @@ async function logIn(formData) {
 
 export default async function LogInPage({ searchParams }) {
   // ?error=true is set by logIn when Supabase says no
-  const { error } = await searchParams;
+  const { error, confirmation } = await searchParams;
 
   return (
     <main>
@@ -35,6 +35,11 @@ export default async function LogInPage({ searchParams }) {
       {error && (
         <p className="form-error" role="alert">
           Could not log in. Please check your email and password.
+        </p>
+      )}
+      {confirmation && (
+        <p role="status">
+          Check your email and confirm your account before logging in.
         </p>
       )}
       <form action={logIn} className="auth-form">

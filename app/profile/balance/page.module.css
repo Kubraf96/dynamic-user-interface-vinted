@@ -1,0 +1,160 @@
+.page {
+  max-width: none;
+  min-height: calc(100vh - 8rem);
+  margin: 0;
+  padding: 1.25rem 1rem 8.75rem;
+  background: #ffffff;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.25rem 1rem;
+  border: 1px solid #edf0f1;
+  border-radius: 0.75rem;
+  background: #f7f9f9;
+}
+
+.summary p,
+.summary span {
+  margin: 0;
+  color: #657579;
+}
+
+.summary strong {
+  margin: 0.35rem 0;
+  color: #1f2d30;
+  font-size: 2.5rem;
+  line-height: 1.1;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.actions button,
+.submit {
+  min-height: 46px;
+  border: 0;
+  border-radius: 999px;
+  background: #007782;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.actions button:first-child {
+  border: 1px solid #007782;
+  background: #ffffff;
+  color: #007782;
+}
+
+.history {
+  margin-top: 2rem;
+}
+
+.history h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.transaction {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 4.75rem;
+  border-bottom: 1px solid #edf0f1;
+}
+
+.transactionIcon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  place-items: center;
+  background: #edf0f1;
+  color: #657579;
+  font-size: 1.25rem;
+}
+
+.transaction div {
+  display: flex;
+  flex-direction: column;
+}
+
+.transaction small {
+  color: #657579;
+}
+
+.positive {
+  color: #007782;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  padding: 1.5rem 1rem 2rem;
+  border-radius: 1.25rem 1.25rem 0 0;
+  background: #ffffff;
+}
+
+.modal h2 {
+  margin: 0 2.75rem 1.25rem 0;
+  font-size: 1.5rem;
+}
+
+.modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: #657579;
+}
+
+.modal input {
+  height: 3.25rem;
+  border: 1px solid #dfe4e5;
+  border-radius: 0.5rem;
+  outline: 0;
+  padding: 0 0.85rem;
+  color: #1f2d30;
+  font: inherit;
+  font-size: 1.25rem;
+}
+
+.close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  background: transparent;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 1.25rem;
+}
+
+.submit:disabled {
+  background: #dfe4e5;
+  color: #657579;
+  cursor: not-allowed;
+}
