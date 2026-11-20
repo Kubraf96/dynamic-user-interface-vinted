@@ -18,9 +18,6 @@ async function signUp(formData) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/auth/confirm`,
-    },
   });
 
   // Something went wrong: back to the form with ?error=true in the URL
@@ -39,13 +36,12 @@ async function signUp(formData) {
 export default async function SignUpPage({ searchParams }) {
   // ?error=true is set by signUp when Supabase says no
   const { error } = await searchParams;
-
   return (
     <main>
       <h1>Sign up</h1>
       {error && (
         <p className="form-error" role="alert">
-          Could not sign up. Maybe the email is already in use.
+          Kunne ikke oprette brugeren. Prøv igen eller brug en anden email.
         </p>
       )}
       <form action={signUp} className="auth-form">
