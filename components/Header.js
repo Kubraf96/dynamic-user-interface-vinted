@@ -12,6 +12,18 @@ export default function Header({
   const pathname = usePathname();
 
   if (pathname === "/") return null;
+  if (pathname.startsWith("/inbox/")) return null;
+
+  if (pathname.startsWith("/profile/orders")) {
+    title = "Mine ordrer";
+    backHref = pathname === "/profile/orders" ? "/profile" : "/profile/orders";
+  } else if (pathname === "/profile/balance") {
+    title = "Saldo";
+    backHref = "/profile";
+  } else if (pathname === "/profile") {
+    title = "Profil";
+    showArrow = false;
+  }
 
   return (
     <header className={styles.header}>
