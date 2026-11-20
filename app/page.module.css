@@ -138,6 +138,56 @@
   border-top: 1px solid #eceeee;
 }
 
+.skeleton,
+.skeletonLine {
+  background: linear-gradient(
+    90deg,
+    #e9ecec 25%,
+    #f5f6f6 50%,
+    #e9ecec 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.25s ease-in-out infinite;
+}
+
+.skeletonLine {
+  height: 0.75rem;
+  margin-top: 0.5rem;
+  border-radius: 999px;
+}
+
+.skeletonLineTitle {
+  width: 72%;
+  height: 0.875rem;
+}
+
+.skeletonLineMeta {
+  width: 48%;
+}
+
+.skeletonLinePrice {
+  width: 38%;
+  height: 1rem;
+  margin-top: 0.7rem;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton,
+  .skeletonLine {
+    animation: none;
+  }
+}
+
 .shippingNote {
   position: fixed;
   z-index: 45;
