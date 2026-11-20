@@ -1,28 +1,25 @@
 import Link from "next/link";
 import styles from "./Header.module.css";
 
-export default function Header() {
+export default function Header({
+  title = "Mine ordrer",
+  showArrow = true,
+  backHref = "/",
+}) {
   return (
     <header className={styles.header}>
-      <nav className={styles.nav}>
-        <Link href="/" className={styles.logo}>
-          Supabase Auth
-        </Link>
-        <ul className={styles.links}>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/profile">Profile</Link>
-          </li>
-          <li>
-            <Link href="/signup">Sign up</Link>
-          </li>
-          <li>
-            <Link href="/login">Log in</Link>
-          </li>
-        </ul>
-      </nav>
+      <div className={styles.inner}>
+        {showArrow ? (
+          <Link href={backHref} className={styles.backButton} aria-label="Gå tilbage">
+            <img src="/arrow-icon.svg" alt="" />
+          </Link>
+        ) : (
+          <span className={styles.backPlaceholder} aria-hidden="true" />
+        )}
+
+        <h1 className={styles.title}>{title}</h1>
+        <span className={styles.trailingPlaceholder} aria-hidden="true" />
+      </div>
     </header>
   );
 }
