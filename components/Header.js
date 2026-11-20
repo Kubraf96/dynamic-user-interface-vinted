@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Header.module.css";
 
 export default function Header({
@@ -6,6 +9,10 @@ export default function Header({
   showArrow = true,
   backHref = "/",
 }) {
+  const pathname = usePathname();
+
+  if (pathname === "/") return null;
+
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
