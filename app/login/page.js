@@ -19,6 +19,7 @@ async function logIn(formData) {
 
   // Something went wrong: back to the form with ?error=true in the URL
   if (error) {
+    console.error("Supabase login failed:", error.message);
     redirect("/login?error=true");
   }
 

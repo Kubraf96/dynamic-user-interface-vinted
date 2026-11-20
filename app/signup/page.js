@@ -19,6 +19,7 @@ async function signUp(formData) {
 
   // Something went wrong: back to the form with ?error=true in the URL
   if (error) {
+    console.error("Supabase sign-up failed:", error.message);
     redirect("/signup?error=true");
   }
 
