@@ -1,0 +1,71 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  padding: 0 18px;
+  font-family: var(--font-family-primary);
+  transition: opacity 0.6s ease;
+}
+
+.dimmed {
+  opacity: 0.35;
+}
+
+.title {
+  margin: 0;
+  color: var(--black);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  column-gap: var(--gap-md);
+  padding-right: 6px;
+  color: var(--black);
+  font-size: var(--font-size-sm);
+  line-height: 24px;
+  text-decoration: none;
+}
+
+.row > span:first-child {
+  grid-column: 1;
+}
+
+.row > span:nth-child(2) {
+  grid-column: 2;
+  text-align: right;
+}
+
+/* Keeps the "Forskel" amount aligned with the amounts that have a chevron */
+.alignWithChevron {
+  /* the empty 3rd grid column already contributes one column-gap */
+  padding-right: calc(6px + 17.519px);
+}
+
+.rowLabel {
+  color: var(--grey-text);
+}
+
+.sold {
+  color: var(--accent-2);
+}
+
+.bought {
+  color: var(--accent-1);
+}
+
+.divider {
+  height: 1px;
+  margin-top: -6px;
+  background: var(--message-divider);
+}

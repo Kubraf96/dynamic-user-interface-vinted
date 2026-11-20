@@ -91,11 +91,17 @@
   cursor: pointer;
 }
 
+.categoryActive {
+  border-color: #007f8c;
+  background: #e6fafb;
+  color: #191d1e;
+}
+
 .feed {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem 0.5rem;
-  padding: 0.25rem 0.75rem 0;
+  gap: 11.731px 7.821px;
+  padding: 0 7.821px;
 }
 
 .card {
@@ -104,32 +110,69 @@
 
 .cardImage {
   position: relative;
-  aspect-ratio: 0.82;
-  border-radius: 0.25rem;
+  aspect-ratio: 185.095 / 271.124;
+  overflow: hidden;
+  border-radius: 5.866px;
   background: #e3e5e5;
+}
+
+/* Crop of the shared listing photo (393 × 854 in Figma) */
+.listingPhoto {
+  position: absolute;
+  width: 212.33%;
+  height: 315.15%;
+  max-width: none;
+  object-fit: cover;
 }
 
 .favorite {
   position: absolute;
-  right: 0.55rem;
-  bottom: 0.55rem;
-  display: grid;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid #dfe3e4;
-  border-radius: 50%;
-  place-items: center;
+  right: 7.82px;
+  bottom: 7.82px;
+  display: flex;
+  align-items: center;
+  gap: 3.259px;
+  height: 30.632px;
+  padding: 0 7.169px;
+  border: 0;
+  border-radius: 26.07px;
   background: #ffffff;
-  box-shadow: 0 2px 8px rgba(38, 49, 51, 0.12);
+  color: #606d70;
+  font: inherit;
+  font-size: 11.731px;
   cursor: pointer;
 }
 
-.favorite svg {
-  width: 1.35rem;
-  height: 1.35rem;
-  fill: none;
-  stroke: #657579;
-  stroke-width: 1.5;
+.favorite img {
+  display: block;
+  margin: -0.98px;
+}
+
+.favoriteActive {
+  color: #007f8c;
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1.955px;
+  padding: 3.91px 0 0 3.91px;
+  color: #606d70;
+  font-size: 11.731px;
+  line-height: 14.99px;
+}
+
+.productPrice {
+  margin-top: 6.517px;
+}
+
+.productTotal {
+  display: flex;
+  align-items: center;
+  gap: 2.607px;
+  color: #007f8c;
+  font-size: 13.035px;
+  line-height: 16.294px;
 }
 
 .cardInfo {

@@ -1,0 +1,102 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-lg);
+  max-width: none;
+  margin: 0;
+  padding: var(--padding-md) var(--padding-md) 8.75rem;
+  background: var(--white);
+  font-family: var(--font-family-primary);
+}
+
+.toggle {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap-md);
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 149px;
+  height: 36px;
+  padding: var(--gap-sm) var(--padding-xl);
+  border: 0;
+  border-radius: var(--border-radius-full);
+  background: var(--stroke-grey);
+  color: var(--black);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  line-height: 24px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.tabActive {
+  background: var(--secondary);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--accent-4);
+  outline-offset: 2px;
+}
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  line-height: 28px;
+}
+
+.totals h2 {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}
+
+.totals dl div {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+}
+
+.totals dd {
+  font-weight: var(--font-weight-medium);
+}
+
+.sold {
+  color: var(--accent-2);
+}
+
+.bought {
+  color: var(--accent-1);
+}
+
+/* Full-bleed line between the totals and the chart */
+.divider {
+  height: 1px;
+  margin: -16px calc(var(--padding-md) * -1) -16px;
+  background: var(--message-divider);
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}
+
+.legend span {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.chartArea {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}

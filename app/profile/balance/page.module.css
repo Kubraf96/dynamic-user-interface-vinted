@@ -2,98 +2,162 @@
   max-width: none;
   min-height: calc(100vh - 8rem);
   margin: 0;
-  padding: 1.25rem 1rem 8.75rem;
-  background: #ffffff;
+  padding: 0 0 8.75rem;
+  background: var(--white);
+  font-family: var(--font-family-primary);
+}
+
+.pending {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-sm) var(--padding-md);
+  border-bottom: 1px solid var(--stroke-grey);
+  color: var(--grey-text);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}
+
+.pendingAmount {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
 }
 
 .summary {
   display: flex;
   flex-direction: column;
+  gap: var(--gap-lg);
+  padding: var(--padding-lg) 0;
+}
+
+.available {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 2.25rem 1rem;
-  border: 1px solid #edf0f1;
-  border-radius: 0.75rem;
-  background: #f7f9f9;
+  text-align: center;
 }
 
-.summary p,
-.summary span {
-  margin: 0;
-  color: #657579;
+.available strong {
+  color: var(--black);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 48px;
 }
 
-.summary strong {
-  margin: 0.35rem 0;
-  color: #1f2d30;
-  font-size: 2.5rem;
-  line-height: 1.1;
+.available span {
+  color: var(--grey-text);
+  font-size: var(--font-size-sm);
+  line-height: 24px;
 }
 
 .actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: var(--padding-xl);
 }
 
-.actions button,
-.submit {
-  min-height: 46px;
+.action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   border: 0;
-  border-radius: 999px;
-  background: #007782;
-  color: #ffffff;
+  background: transparent;
+  color: var(--black);
   font: inherit;
-  font-weight: 700;
+  font-size: var(--font-size-sm);
+  line-height: 24px;
+  text-decoration: none;
   cursor: pointer;
 }
 
-.actions button:first-child {
-  border: 1px solid #007782;
-  background: #ffffff;
-  color: #007782;
+.actionIcon {
+  display: flex;
+  align-items: center;
+  padding: var(--padding-md);
+  border-radius: var(--border-radius-full);
+  background: var(--accent-3);
 }
 
-.history {
-  margin-top: 2rem;
+.actionIcon img {
+  display: block;
 }
 
-.history h2 {
-  margin-bottom: 0.75rem;
-  font-size: 1.25rem;
+.sectionDivider {
+  height: 24px;
+  background: var(--section-divider);
+}
+
+.overviewLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--padding-sm) 0;
+  padding: var(--padding-sm) var(--padding-md);
+  color: var(--black);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+  text-decoration: none;
+}
+
+.monthLabel {
+  padding: var(--padding-sm) var(--padding-md);
+  color: var(--grey-text);
+  font-size: var(--font-size-sm);
+  line-height: 24px;
+}
+
+.transactions {
+  list-style: none;
+}
+
+.transactions > li + li {
+  border-top: 1px solid var(--stroke-grey);
 }
 
 .transaction {
-  display: grid;
-  grid-template-columns: 2.75rem 1fr auto;
-  align-items: center;
-  gap: 0.75rem;
-  min-height: 4.75rem;
-  border-bottom: 1px solid #edf0f1;
-}
-
-.transactionIcon {
-  display: grid;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 50%;
-  place-items: center;
-  background: #edf0f1;
-  color: #657579;
-  font-size: 1.25rem;
-}
-
-.transaction div {
   display: flex;
   flex-direction: column;
+  padding: var(--padding-sm) var(--padding-md);
+  color: var(--black);
+  text-decoration: none;
 }
 
-.transaction small {
-  color: #657579;
+.transactionType {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}
+
+.transactionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+  line-height: 24px;
+}
+
+.transactionTrailing {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+}
+
+.transactionDate {
+  color: var(--grey-text);
+  font-size: var(--font-size-sm);
+  line-height: 24px;
 }
 
 .positive {
-  color: #007782;
+  color: var(--accent-4);
+}
+
+.negative {
+  color: var(--accent-7);
 }
 
 .overlay {
@@ -150,7 +214,16 @@
 
 .submit {
   width: 100%;
+  min-height: 46px;
   margin-top: 1.25rem;
+  border: 0;
+  border-radius: var(--border-radius-sm);
+  background: var(--accent-4);
+  color: var(--white);
+  font: inherit;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
 }
 
 .submit:disabled {

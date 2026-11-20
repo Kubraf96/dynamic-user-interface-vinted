@@ -15,6 +15,11 @@ export const bottomNavItems = [
 export default function BottomNav() {
   const pathname = usePathname();
 
+  // Full-screen flows (story slides and order confirmations) have no navbar in the design
+  if (pathname.startsWith("/profile/year/") || pathname.startsWith("/confirmation/")) {
+    return null;
+  }
+
   return (
     <nav className={styles.nav} aria-label="Primær navigation">
       {bottomNavItems.map((item) => {

@@ -1,0 +1,146 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-md);
+  max-width: none;
+  margin: 0;
+  padding: 17px var(--padding-md) 8.75rem;
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-family-primary);
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.thumb {
+  width: 53px;
+  height: 67px;
+  border-radius: var(--border-radius-md);
+  object-fit: cover;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-sm);
+  line-height: 24px;
+}
+
+.cardText strong {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}
+
+.cardText span:nth-child(2) {
+  color: var(--grey-text);
+}
+
+.amountSold,
+.amountBought {
+  font-size: var(--font-size-sm);
+  line-height: 24px;
+}
+
+.cardText .amountSold,
+.cardText .amountBought {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.amountSold {
+  color: var(--accent-2);
+}
+
+.amountBought {
+  color: var(--accent-1);
+}
+
+.divider {
+  height: 1px;
+  background: var(--message-divider);
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.status strong {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}
+
+.status small {
+  color: var(--grey-text);
+  font-size: var(--font-size-xs);
+  line-height: 24px;
+}
+
+.muted {
+  color: var(--grey-text);
+  font-size: var(--font-size-sm);
+  line-height: 24px;
+}
+
+.centered {
+  text-align: center;
+}
+
+.payment {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.payment h2 {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}
+
+.payment dl {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment dl div {
+  display: flex;
+  justify-content: space-between;
+  color: var(--grey-text);
+  font-size: var(--font-size-sm);
+  line-height: 24px;
+}
+
+.fee {
+  display: flex;
+  align-items: center;
+}
+
+.protection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14.987px;
+  height: 16.653px;
+  margin-left: 4px;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.total strong {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}

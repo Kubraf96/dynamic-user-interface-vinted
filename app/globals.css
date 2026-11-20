@@ -28,8 +28,13 @@
   --font-weight-medium: 500;
   --font-weight-bold: 700;
 
-  --font-family-primary: "Inter", sans-serif;
-  --font-family-secondary: "Cooper Black", serif;
+  --font-family-primary: var(--font-inter), "Inter", sans-serif;
+  /* Cooper Black is not on Google Fonts: falls back to Fraunces Black until a licensed font file is added */
+  --font-family-secondary: "Cooper Black", var(--font-fraunces), serif;
+  --font-family-display: var(--font-fraunces), serif;
+  --font-family-arimo: var(--font-arimo), Arial, sans-serif;
+  --section-divider: #ecf1f1;
+  --message-divider: #e8ebeb;
 
   --border-radius-sm: 4px;
   --border-radius-md: 12px;

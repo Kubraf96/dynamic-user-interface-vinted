@@ -1,0 +1,154 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  max-width: none;
+  margin: 0;
+  padding: 14px var(--padding-md) 8.75rem;
+  background: var(--white);
+  font-family: var(--font-family-primary);
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-lg);
+  padding: var(--padding-sm) var(--padding-xl);
+  border-radius: var(--border-radius-md);
+}
+
+.bannerSold {
+  background: var(--accent-4);
+  color: var(--secondary);
+}
+
+.bannerBought {
+  background: var(--accent-1);
+  color: var(--accent-2);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 89px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.stat span {
+  font-size: var(--font-size-sm);
+  line-height: 24px;
+}
+
+.stat strong {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}
+
+/* The design draws the 48px line horizontally and rotates it */
+.statDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  height: 48px;
+}
+
+.statDivider img {
+  flex: none;
+  display: block;
+  transform: rotate(-90deg);
+}
+
+.divider {
+  align-self: stretch;
+  height: 1px;
+  margin: 0 calc(var(--padding-md) * -1);
+  background: var(--message-divider);
+}
+
+.heading {
+  align-self: stretch;
+  margin: 0;
+  color: var(--black);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}
+
+.empty {
+  align-self: stretch;
+  color: var(--grey-text);
+  font-size: var(--font-size-sm);
+}
+
+.list {
+  align-self: stretch;
+  list-style: none;
+}
+
+.list li {
+  padding-bottom: var(--gap-md);
+  margin: 0 calc(var(--padding-md) * -1) var(--gap-md);
+  border-bottom: 1px solid var(--message-divider);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--padding-md);
+  color: var(--black);
+  text-decoration: none;
+}
+
+.itemInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.thumb {
+  width: 50px;
+  height: 70px;
+  border-radius: var(--border-radius-md);
+  object-fit: cover;
+}
+
+.itemText {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemText strong {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+}
+
+.itemText small {
+  color: var(--grey-text);
+  font-size: var(--font-size-xs);
+  line-height: 24px;
+}
+
+.itemTrailing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-sm);
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.priceSold {
+  color: var(--accent-2);
+}
+
+.priceBought {
+  color: var(--accent-1);
+}
