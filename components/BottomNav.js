@@ -8,7 +8,7 @@ export const bottomNavItems = [
   { label: "Hjem", href: "/", icon: "/icons/home.svg", activeIcon: "/icons/home-filled.svg" },
   { label: "Søg", href: "/search", icon: "/icons/browse.svg" },
   { label: "Sælg", href: "/sell", icon: "/icons/sell.svg" },
-  { label: "Indbakke", href: "/inbox", icon: "/icons/inbox.svg" },
+  { label: "Indbakke", href: "/inbox", icon: "/icons/inbox.svg", activeIcon: "/icons/inbox-filled.svg" },
   { label: "Profil", href: "/profile", icon: "/icons/profile.svg", activeIcon: "/icons/profile-filled.svg" },
 ];
 
