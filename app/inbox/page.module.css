@@ -1,0 +1,147 @@
+.page {
+  max-width: none;
+  min-height: calc(100vh - 8rem);
+  margin: 0;
+  padding: 1rem 0 8.75rem;
+  background: #ffffff;
+}
+
+.title {
+  margin: 0;
+  padding: 0 1rem 0.75rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.search {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  align-items: center;
+  min-height: 3.25rem;
+  margin: 0 1rem;
+  border: 1px solid #dfe4e5;
+  border-radius: 0.25rem;
+  background: #f7f8f8;
+}
+
+.searchIcon {
+  padding-left: 0.75rem;
+  color: #657579;
+  font-size: 1.5rem;
+}
+
+.search input {
+  min-width: 0;
+  height: 3rem;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 0.75rem;
+  border-bottom: 1px solid #edf0f1;
+}
+
+.tabs button {
+  min-height: 3.25rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: #ffffff;
+  color: #657579;
+  font: inherit;
+  cursor: pointer;
+}
+
+.tabs .activeTab {
+  border-bottom-color: #657579;
+  color: #1f2d30;
+  font-weight: 700;
+}
+
+.list {
+  border-top: 1px solid #edf0f1;
+}
+
+.conversation {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: 0.75rem;
+  min-height: 5.75rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #edf0f1;
+  color: #1f2d30;
+  text-decoration: none;
+}
+
+.avatar {
+  display: grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  place-items: center;
+  background: #edf0f1;
+  color: #657579;
+  font-weight: 700;
+}
+
+.conversationInfo {
+  min-width: 0;
+}
+
+.nameRow,
+.messageRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.nameRow strong {
+  font-size: 1.05rem;
+}
+
+.nameRow small,
+.type {
+  color: #657579;
+  font-size: 0.75rem;
+}
+
+.messageRow {
+  margin-top: 0.25rem;
+  color: #657579;
+}
+
+.messageRow > span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.unread {
+  display: grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 1.25rem;
+  border-radius: 50%;
+  place-items: center;
+  background: #fa3d4f;
+  color: #ffffff;
+  font-size: 0.7rem;
+}
+
+.type {
+  display: block;
+  margin-top: 0.15rem;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}

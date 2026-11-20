@@ -15,7 +15,13 @@ async function signUp(formData) {
   const password = formData.get("password");
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signUp({ email, password });
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/auth/confirm`,
+    },
+  });
 
   // Something went wrong: back to the form with ?error=true in the URL
   if (error) {
@@ -23,7 +29,11 @@ async function signUp(formData) {
     redirect("/signup?error=true");
   }
 
-  redirect("/");
+  if (data.session) {
+    redirect("/");
+  }
+
+  redirect("/login?confirmation=true");
 }
 
 export default async function SignUpPage({ searchParams }) {
