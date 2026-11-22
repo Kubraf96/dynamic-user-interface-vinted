@@ -1,24 +1,11 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use } from "react";
 import styles from "./page.module.css";
 
 export default function OrderDetailPage({ params }) {
   const { id } = use(params);
   const activeStep = 2;
-  const [playStrokeOnce, setPlayStrokeOnce] = useState(false);
-
-  useEffect(() => {
-    const storageKey = `order-status-stroke-${id}`;
-
-    if (window.sessionStorage.getItem(storageKey) === "true") {
-      setPlayStrokeOnce(false);
-      return;
-    }
-
-    window.sessionStorage.setItem(storageKey, "true");
-    setPlayStrokeOnce(true);
-  }, [id]);
 
   const steps = [
     { title: "Betaling", detail: "Betaling gennemført", icon: "/order-status/payment.png" },
@@ -62,9 +49,7 @@ export default function OrderDetailPage({ params }) {
                         index < 2
                           ? "/order-status/default-stroke.svg"
                           : index === 2
-                            ? playStrokeOnce
-                              ? "/order-status/true-stroke.gif"
-                              : "/order-status/false-stroke.svg"
+                            ? "/order-status/true-stroke.gif"
                             : "/order-status/false-stroke.svg"
                       }
                       alt=""

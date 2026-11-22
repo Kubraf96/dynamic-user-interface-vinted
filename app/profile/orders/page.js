@@ -40,17 +40,6 @@ export default function OrdersPage() {
         </button>
       </nav>
 
-      <section className={styles.summary} aria-label="Ordreoverblik">
-        <div>
-          <strong>{orders.length}</strong>
-          <span>{tab === "sold" ? "Solgte ordrer" : "Købte ordrer"}</span>
-        </div>
-        <div>
-          <strong>{tab === "sold" ? "1050 kr." : "465 kr."}</strong>
-          <span>{tab === "sold" ? "Samlet salg" : "Samlet køb"}</span>
-        </div>
-      </section>
-
       <section className={styles.list} aria-label="Ordrer">
         {orders.map((order) => (
           <Link href={`/profile/orders/${order.id}`} className={styles.order} key={order.id}>
