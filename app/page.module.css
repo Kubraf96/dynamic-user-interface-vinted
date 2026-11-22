@@ -66,6 +66,11 @@
   stroke-linejoin: round;
 }
 
+.cameraButton img {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
 .categories {
   display: flex;
   gap: 0.5rem;
@@ -118,10 +123,8 @@
 
 /* Crop of the shared listing photo (393 × 854 in Figma) */
 .listingPhoto {
-  position: absolute;
-  width: 212.33%;
-  height: 315.15%;
-  max-width: none;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -160,6 +163,71 @@
   color: #606d70;
   font-size: 11.731px;
   line-height: 14.99px;
+}
+
+.seller {
+  color: #657579;
+  font-size: 0.7rem;
+}
+
+.title {
+  overflow: hidden;
+  color: #222;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.noPhoto {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  color: #657579;
+  font-size: 0.8rem;
+}
+
+.emptyState,
+.emptyCategory {
+  padding: 2.5rem 1rem;
+  color: #526367;
+  text-align: center;
+}
+
+.emptyState h2 {
+  margin-bottom: 0.5rem;
+  color: #1e1e1e;
+  font-size: 1.25rem;
+}
+
+.emptyState p {
+  margin: 0 auto 1rem;
+  max-width: 28rem;
+}
+
+.debugError {
+  max-width: 52rem;
+  margin: 1rem auto 0;
+  padding: 0.75rem;
+  overflow-wrap: anywhere;
+  border-radius: 0.5rem;
+  background: #fff3ef;
+  color: #8c260e;
+  font: 0.8rem/1.5 var(--font-geist-mono), monospace;
+  text-align: left;
+  white-space: pre-wrap;
+}
+
+.sellLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: #008ca1;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .productPrice {

@@ -24,6 +24,9 @@ export default function Header({
   if (pathname.startsWith("/profile/orders")) {
     title = "Mine ordrer";
     backHref = pathname === "/profile/orders" ? "/profile" : "/profile/orders";
+  } else if (pathname.startsWith("/profile/listings")) {
+    title = "Mine annoncer";
+    backHref = "/profile";
   } else if (pathname === "/profile/balance") {
     title = "Saldo";
     backHref = "/profile";
