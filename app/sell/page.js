@@ -7,7 +7,7 @@ export const metadata = { title: "Opret annonce | Vinted" };
 
 const messages = {
   fields: "Udfyld titel, beskrivelse, kategori og en pris over 0 kr.",
-  image: "Vælg et JPG-, PNG-, WebP- eller AVIF-billede på højst 5 MB.",
+  image: "Vælg 1-5 JPG-, PNG-, WebP- eller AVIF-billeder på højst 5 MB hver.",
   profile: "Din profil kunne ikke oprettes. Kontrollér RLS-politikken for profiles.",
   save: "Annoncen kunne ikke gemmes. Kontrollér RLS-politikkerne for listings og product_images.",
 };

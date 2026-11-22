@@ -16,7 +16,11 @@ export async function toggleFavorite(listingId) {
 
   const { data: existing, error: lookupError } = await supabase
     .from("favorites").select("listing_id").eq("user_id", user.id).eq("listing_id", listingId).maybeSingle();
-  if (lookupError) return { ok: false, message: "Favoritter kunne ikke hentes. Kontrollér RLS-politikken for favorites." };
+  if (lookupError) {
+    console.error("Favorite lookup failed:", lookupError.code, lookupError.message);
+    const detail = process.env.NODE_ENV === "development" ? ` (${lookupError.code || "DB"}: ${lookupError.message})` : "";
+    return { ok: false, message: `Favoritter kunne ikke hentes. Kontrollér favorites RLS.${detail}` };
+  }
 
   if (listing.seller_id === user.id && !existing) {
     return { ok: false, message: "Du kan ikke gemme din egen annonce som favorit." };
@@ -29,7 +33,11 @@ export async function toggleFavorite(listingId) {
     if (listing.status !== "active") return { ok: false, message: "Denne annonce kan ikke gemmes som favorit." };
     ({ error } = await supabase.from("favorites").insert({ user_id: user.id, listing_id: listingId }));
   }
-  if (error) return { ok: false, message: "Favoritten kunne ikke gemmes. Kontrollér RLS-politikken for favorites." };
+  if (error) {
+    console.error("Favorite save failed:", error.code, error.message);
+    const detail = process.env.NODE_ENV === "development" ? ` (${error.code || "DB"}: ${error.message})` : "";
+    return { ok: false, message: `Favoritten kunne ikke gemmes. Kontrollér favorites RLS.${detail}` };
+  }
 
   revalidatePath("/");
   revalidatePath("/profile/favorites");

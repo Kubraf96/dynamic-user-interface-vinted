@@ -28,12 +28,17 @@ export async function createListing(formData) {
   const condition = readText(formData, "condition", 60);
   const category = readText(formData, "category", 80);
   const price = Number(readText(formData, "price", 20).replace(",", "."));
-  const imagePath = readText(formData, "imagePath", 240);
+  let imagePaths = [];
+  try {
+    const parsedPaths = JSON.parse(readText(formData, "imagePaths", 1600));
+    if (Array.isArray(parsedPaths)) imagePaths = parsedPaths.filter((path) => typeof path === "string").slice(0, 5);
+  } catch {}
 
   if (!title || !description || !category || !Number.isFinite(price) || price <= 0) {
     redirect("/sell?error=fields");
   }
-  if (!new RegExp(`^${user.id}/[A-Za-z0-9-]+\\.(jpg|jpeg|png|webp|avif)$`, "i").test(imagePath)) {
+  const userImagePath = new RegExp(`^${user.id}/[A-Za-z0-9-]+\\.(jpg|jpeg|png|webp|avif)$`, "i");
+  if (!imagePaths.length || imagePaths.length > 5 || imagePaths.some((path) => !userImagePath.test(path))) {
     redirect("/sell?error=image");
   }
 
@@ -69,20 +74,20 @@ export async function createListing(formData) {
     .single();
 
   if (listingError) {
-    await supabase.storage.from(BUCKET).remove([imagePath]);
+    await supabase.storage.from(BUCKET).remove(imagePaths);
     console.error("Listing creation failed:", listingError.message);
     redirect(`/sell?error=save&detail=${encodeURIComponent(listingError.message)}`);
   }
 
-  const { data: publicImage } = supabase.storage.from(BUCKET).getPublicUrl(imagePath);
-  const { error: imageRowError } = await supabase.from("product_images").insert({
+  const imageRecords = imagePaths.map((imagePath) => ({
     listing_id: listing.id,
-    image_url: publicImage.publicUrl,
-  });
+    image_url: supabase.storage.from(BUCKET).getPublicUrl(imagePath).data.publicUrl,
+  }));
+  const { error: imageRowError } = await supabase.from("product_images").insert(imageRecords);
 
   if (imageRowError) {
     await supabase.from("listings").delete().eq("id", listing.id);
-    await supabase.storage.from(BUCKET).remove([imagePath]);
+    await supabase.storage.from(BUCKET).remove(imagePaths);
     console.error("Listing image record failed:", imageRowError.message);
     redirect(`/sell?error=save&detail=${encodeURIComponent(imageRowError.message)}`);
   }

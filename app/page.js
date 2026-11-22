@@ -82,8 +82,8 @@ export default async function Home({ searchParams }) {
         <ListingFeed listings={listings} favoriteIds={favoriteIds} favoriteCounts={favoriteCounts} currentUserId={user?.id} />
       ) : (
         <section className={styles.emptyState}>
-          <h2>Der er ingen annoncer endnu</h2>
-          <p>Opret den første annonce, så bliver den vist her for alle.</p>
+          <h2>Der er ingen annoncer at vise lige nu</h2>
+          <p>{user ? "Her vises aktive annoncer fra andre medlemmer." : "Opret den første annonce, så bliver den vist her for alle."}</p>
           <Link className={styles.sellLink} href="/sell">Opret en annonce</Link>
         </section>
       )}

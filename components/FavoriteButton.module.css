@@ -4,4 +4,4 @@
 .button.active { color: #df5265; }
 .button.active svg { fill: #df5265; }
 .button:disabled { opacity: 0.7; }
-.error { position: absolute; right: 0; bottom: 2.3rem; width: max-content; max-width: 14rem; padding: 0.45rem 0.55rem; border-radius: 0.35rem; background: #fff3ef; color: #982b18; font-size: 0.75rem; box-shadow: 0 1px 4px #0002; }
+.error { position: fixed; z-index: 120; right: 1rem; bottom: 8rem; left: 1rem; width: fit-content; max-width: calc(100vw - 2rem); margin: 0 auto; padding: 0.7rem 0.85rem; border: 1px solid #f0c5bb; border-radius: 0.5rem; background: #fff3ef; color: #982b18; font-size: 0.85rem; line-height: 1.4; overflow-wrap: anywhere; box-shadow: 0 2px 12px #0002; }

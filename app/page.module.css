@@ -128,6 +128,8 @@
   object-fit: cover;
 }
 
+.imageLink { display: block; width: 100%; height: 100%; color: inherit; text-decoration: none; }
+
 .favorite {
   position: absolute;
   right: 7.82px;

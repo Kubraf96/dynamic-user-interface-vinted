@@ -33,11 +33,11 @@ export default function ListingForm() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const file = formData.get("image");
-    const format = file instanceof File ? getFormat(file) : null;
+    const files = formData.getAll("image").filter((file) => file instanceof File && file.size > 0);
+    const formats = files.map(getFormat);
 
-    if (!format || file.size === 0 || file.size > MAX_IMAGE_SIZE) {
-      setUploadError("Vælg et JPG-, PNG-, WebP- eller AVIF-billede på højst 5 MB.");
+    if (!files.length || files.length > 5 || files.some((file, index) => !formats[index] || file.size > MAX_IMAGE_SIZE)) {
+      setUploadError("Vælg 1-5 JPG-, PNG-, WebP- eller AVIF-billeder på højst 5 MB hver.");
       return;
     }
 
@@ -56,20 +56,27 @@ export default function ListingForm() {
         return;
       }
 
-      const imagePath = `${user.id}/${window.crypto.randomUUID()}.${format.extension}`;
-      const { error } = await supabase.storage.from("listing-images").upload(imagePath, file, {
-        contentType: format.contentType,
-        upsert: false,
-      });
-      if (error) {
+      const uploadResults = await Promise.all(files.map(async (file, index) => {
+        const format = formats[index];
+        const path = `${user.id}/${window.crypto.randomUUID()}.${format.extension}`;
+        const { error } = await supabase.storage.from("listing-images").upload(path, file, {
+          contentType: format.contentType,
+          upsert: false,
+        });
+        return { path, error };
+      }));
+      const uploadedPaths = uploadResults.filter(({ error }) => !error).map(({ path }) => path);
+      const failedUpload = uploadResults.find(({ error }) => error);
+      if (failedUpload) {
+        if (uploadedPaths.length) await supabase.storage.from("listing-images").remove(uploadedPaths);
         submissionLocked.current = false;
         setStage("");
-        setUploadError(`Billedet kunne ikke uploades: ${error.message}`);
+        setUploadError(`Billedet kunne ikke uploades: ${failedUpload.error.message}`);
         return;
       }
 
       formData.delete("image");
-      formData.set("imagePath", imagePath);
+      formData.set("imagePaths", JSON.stringify(uploadedPaths));
       setStage("saving");
       startTransition(async () => {
         await createListing(formData);
@@ -89,9 +96,9 @@ export default function ListingForm() {
         <h2 id="photos-heading">Billeder</h2>
         <label className={styles.photoPicker} htmlFor="image">
           <span className={styles.photoButton}><span aria-hidden="true">＋</span> Upload fotos</span>
-          <input id="image" name="image" type="file" accept="image/jpeg,image/png,image/webp,image/avif,.jpg,.jpeg,.png,.webp,.avif" onChange={(event) => setPhotoName(event.currentTarget.files?.[0]?.name || "")} required />
+          <input id="image" name="image" type="file" multiple accept="image/jpeg,image/png,image/webp,image/avif,.jpg,.jpeg,.png,.webp,.avif" onChange={(event) => setPhotoName(Array.from(event.currentTarget.files || []).map((file) => file.name).join(", "))} required />
         </label>
-        <small>JPG, PNG, WebP eller AVIF · maks. 5 MB</small>
+        <small>JPG, PNG, WebP eller AVIF · op til 5 fotos, maks. 5 MB pr. foto</small>
         {photoName && <p className={styles.photoName}>{photoName}</p>}
       </section>
 

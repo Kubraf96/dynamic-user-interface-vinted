@@ -7,7 +7,7 @@ import styles from "./Header.module.css";
 
 // Routes that render their own full-screen layout without the shared header
 function isHeaderless(pathname) {
-  return pathname === "/" || pathname.startsWith("/inbox/") || pathname.startsWith("/profile/year/") || pathname.startsWith("/profile/listings");
+  return pathname === "/" || pathname.startsWith("/listing/") || pathname.startsWith("/inbox/") || pathname.startsWith("/profile/year/") || pathname.startsWith("/profile/listings");
 }
 
 export default function Header({

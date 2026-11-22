@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import styles from "@/app/page.module.css";
 import FavoriteButton from "@/components/FavoriteButton";
+import Link from "next/link";
 
 const defaultCategories = [
   "Alle",
@@ -53,11 +54,13 @@ export default function ListingFeed({ listings, favoriteIds = [], favoriteCounts
             return (
               <article className={styles.card} key={listing.id}>
                 <div className={styles.cardImage}>
-                  {imageUrl ? <img className={styles.listingPhoto} src={imageUrl} alt={listing.title} /> : <div className={styles.noPhoto}>Intet billede</div>}
+                  <Link href={`/listing/${listing.id}`} className={styles.imageLink} aria-label={`Åbn annoncen: ${listing.title}`}>
+                    {imageUrl ? <img className={styles.listingPhoto} src={imageUrl} alt={listing.title} /> : <div className={styles.noPhoto}>Intet billede</div>}
+                  </Link>
                   {listing.seller_id !== currentUserId && <FavoriteButton listingId={listing.id} initialFavorite={favoriteIds.includes(listing.id)} initialCount={favoriteCounts[listing.id] || 0} onChange={onFavoriteChange} />}
                 </div>
                 <div className={styles.productDetails}>
-                  <p className={styles.title}>{listing.title}</p>
+                  <Link href={`/listing/${listing.id}`} className={styles.title}>{listing.title}</Link>
                   <p>{[listing.size, listing.condition].filter(Boolean).join(" · ")}</p>
                   {listing.status === "sold" && <span className={styles.soldBadge}>Solgt</span>}
                   <p className={styles.productPrice}>{price.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr.</p>

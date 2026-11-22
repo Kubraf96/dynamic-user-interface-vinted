@@ -16,7 +16,7 @@ export default function BottomNav() {
   const pathname = usePathname();
 
   // Full-screen flows (story slides and order confirmations) have no navbar in the design
-  if (pathname === "/sell" || pathname.startsWith("/profile/year/") || pathname.startsWith("/confirmation/")) {
+  if (pathname === "/sell" || pathname.startsWith("/listing/") || pathname.startsWith("/profile/year/") || pathname.startsWith("/confirmation/")) {
     return null;
   }
 
