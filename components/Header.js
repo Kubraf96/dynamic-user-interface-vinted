@@ -10,14 +10,25 @@ function isHeaderless(pathname) {
   return pathname === "/" || pathname.startsWith("/inbox/") || pathname.startsWith("/profile/year/");
 }
 
+function isKnownRoute(pathname) {
+  return [
+    /^\/(?:login|signup|profile|inbox|confirmation\/(?:purchase|sale))$/,
+    /^\/profile\/(?:orders(?:\/[^/]+)?|balance(?:\/.*)?|year)$/,
+  ].some((route) => route.test(pathname));
+}
+
 export default function Header({
-  title = "Mine ordrer",
+  title = "",
   showArrow = true,
   backHref = "/",
 }) {
   const pathname = usePathname();
 
   if (isHeaderless(pathname)) return null;
+
+  if (!isKnownRoute(pathname)) {
+    title = "";
+  }
 
   const balanceMatch = pathname.match(/^\/profile\/balance\/([^/]+)(?:\/(solgt|kobt)(?:\/([^/]+))?)?$/);
 
@@ -50,6 +61,15 @@ export default function Header({
     showArrow = false;
   } else if (pathname === "/profile") {
     title = "Profil";
+    showArrow = false;
+  } else if (pathname === "/inbox") {
+    title = "Indbakke";
+    showArrow = false;
+  } else if (pathname === "/login") {
+    title = "Log ind";
+    showArrow = false;
+  } else if (pathname === "/signup") {
+    title = "Opret konto";
     showArrow = false;
   }
 

@@ -15,8 +15,7 @@ export const metadata = {
 export default function InboxPage() {
   return (
     <main className={styles.page}>
-      <h1 className={styles.title}>Indbakke</h1>
-
+      
       <label className={styles.search}>
         <span className={styles.searchIcon} aria-hidden="true">⌕</span>
         <span className={styles.visuallyHidden}>Søg i indbakke</span>
