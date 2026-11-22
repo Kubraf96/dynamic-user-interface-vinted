@@ -17,12 +17,27 @@
 
 .backButton,
 .backPlaceholder,
-.trailingPlaceholder {
+.trailingPlaceholder,
+.sellClose {
   display: flex;
   width: 2.75rem;
   height: 2.75rem;
   flex: 0 0 2.75rem;
 }
+
+.headerSearch { position: absolute; right: 1rem; display: grid; width: 2.75rem; height: 2.75rem; place-items: center; color: #171b1c; }
+.headerSearch svg { width: 1.8rem; height: 1.8rem; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+
+.sellClose {
+  position: absolute;
+  left: 1.25rem;
+  align-items: center;
+  justify-content: flex-start;
+  color: #171b1c;
+  text-decoration: none;
+}
+
+.sellClose span { font-size: 3rem; font-weight: 300; line-height: 1; }
 
 .backButton {
   position: absolute;

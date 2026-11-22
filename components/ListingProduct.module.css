@@ -1,0 +1,47 @@
+.page { min-height: 100dvh; padding-bottom: 8.5rem; background: #fff; color: #171b1c; }
+.gallery { position: relative; height: min(66svh, 45rem); min-height: 24rem; overflow: hidden; background: #eef1f1; }
+.photo { display: block; width: 100%; height: 100%; object-fit: cover; }
+.noPhoto { display: grid; height: 100%; place-items: center; color: #657579; }
+.back, .more { position: absolute; top: max(1rem, env(safe-area-inset-top)); display: grid; width: 2.8rem; height: 2.8rem; place-items: center; border: 0; border-radius: 50%; background: #0003; color: #fff; text-decoration: none; }
+.back { left: 1rem; }
+.back img { width: 1.8rem; height: 1.8rem; filter: brightness(0) invert(1); }
+.more { right: 1rem; font-size: 1.35rem; letter-spacing: 0.1em; cursor: pointer; }
+.dots { position: absolute; bottom: 1rem; left: 50%; display: flex; gap: 0.55rem; transform: translateX(-50%); }
+.dots button { width: 0.6rem; height: 0.6rem; padding: 0; border: 0; border-radius: 50%; background: #ffffff99; }
+.dots .activeDot { background: #fff; }
+.summary { padding: 1.15rem 1rem 1.5rem; }
+.summary h1 { margin: 0 0 0.35rem; font-size: 1.5rem; line-height: 1.25; font-weight: 600; }
+.itemMeta { margin: 0; color: #606d70; font-size: 1.1rem; }
+.price { margin: 1rem 0 0.15rem; color: #606d70; font-size: 1.2rem; }
+.buyerPrice { display: flex; align-items: center; gap: 0.25rem; margin: 0; color: #007f8c; font-size: 1.15rem; }
+.buyerPrice img { width: 1.4rem; height: 1.4rem; }
+.separator { height: 1rem; background: #eef2f2; }
+.description { padding: 1.5rem 1rem; color: #606d70; font-size: 1.1rem; }
+.description h2 { margin: 0 0 1.75rem; font-size: 1.1rem; font-weight: 500; }
+.description p { margin: 0; white-space: pre-wrap; }
+.seller { display: flex; align-items: center; gap: 0.7rem; padding: 1.5rem 1rem; }
+.seller > img, .avatar { width: 3.2rem; height: 3.2rem; flex: 0 0 3.2rem; border-radius: 50%; object-fit: cover; }
+.avatar { display: grid; place-items: center; background: #e5eeee; color: #007f89; font-size: 1.3rem; }
+.sellerInfo { display: flex; flex: 1; flex-direction: column; gap: 0.2rem; min-width: 0; }
+.sellerInfo strong { overflow: hidden; text-overflow: ellipsis; }
+.sellerInfo span { color: #657579; font-size: 0.85rem; }
+.askSeller { padding: 0.65rem 0.8rem; border: 1px solid #007f89; border-radius: 0.55rem; color: #007f89; font-size: 0.9rem; text-decoration: none; white-space: nowrap; }
+.bundles { padding: 1.3rem 0 1rem; }
+.bundleHeading { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0 1rem 1rem; }
+.bundleHeading h2 { margin: 0 0 0.25rem; font-size: 1.35rem; }
+.bundleHeading p { margin: 0; color: #657579; }
+.bundleHeading button { min-height: 2.8rem; padding: 0.55rem 0.85rem; border: 0; border-radius: 0.6rem; background: #007f89; color: white; font: inherit; white-space: nowrap; }
+.shipping { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 1rem; }
+.shipping h2 { margin: 0; font-size: 1.2rem; }
+.shipping span { color: #606d70; }
+.shipping p { flex-basis: 100%; margin: 0.5rem 0 0; color: #606d70; }
+.safety { padding: 1.5rem 1rem 7rem; color: #606d70; }
+.safety h2 { margin: 0 0 0.5rem; color: #171b1c; font-size: 1.25rem; }
+.safety p { margin: 0; }
+.notice { position: fixed; z-index: 60; right: 1rem; bottom: 8rem; left: 1rem; padding: 0.8rem; border-radius: 0.6rem; background: #171b1c; color: white; text-align: center; }
+.purchaseBar { position: fixed; z-index: 50; right: 0; bottom: 0; left: 0; padding: 0.75rem 1rem max(1rem, env(safe-area-inset-bottom)); border-top: 1px solid #e0e3e3; background: #fff; }
+.purchaseButtons { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+.purchaseButtons button { min-height: 3.2rem; border: 1px solid #007f89; border-radius: 0.6rem; background: white; color: #007f89; font: inherit; font-size: 1.15rem; font-weight: 600; }
+.purchaseButtons button:last-child { background: #007f89; color: white; }
+.purchaseBar a { display: block; margin-top: 0.65rem; color: #007f89; text-align: center; }
+@media (min-width: 48rem) { .page { max-width: 48rem; margin: 0 auto; } .gallery { height: 38rem; } .purchaseBar { right: auto; left: 50%; width: 48rem; transform: translateX(-50%); } }

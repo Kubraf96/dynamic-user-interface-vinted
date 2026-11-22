@@ -1,38 +1,65 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import ListingFeed from "@/components/ListingFeed";
 import styles from "./page.module.css";
 
-const categories = ["Alle", "Kvinder", "Mænd", "Designerartikler", "Børn"];
+export const metadata = { title: "Hjem | Vinted" };
 
-// All four listing photos come from one Figma image; each card shows its own crop of it.
-const products = [
-  { id: "na-kd-strik", brand: "NA-KD", details: "XS · Meget god", price: "25,00 kr.", total: "31,25 kr. inkl.", favorites: 23, crop: { left: "-4.22%", top: "-56.97%" } },
-  { id: "nelly-jeans", brand: "Nelly", details: "EU 36 · Meget god", price: "35,00 kr.", total: "41,75 kr. inkl.", favorites: 15, crop: { left: "-108.1%", top: "-56.97%" } },
-  { id: "navy-trøje", crop: { left: "-4.22%", top: "-189.42%" } },
-  { id: "grå-bukser", crop: { left: "-108.1%", top: "-189.42%" } },
-];
+export default async function Home({ searchParams }) {
+  const { search = "" } = await searchParams;
+  const searchTerm = typeof search === "string" ? search.trim() : "";
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  let query = supabase
+    .from("listings")
+    .select(
+      "id, seller_id, title, description, price, brand, size, condition, category, status, created_at",
+    )
+    .eq("status", "active")
+    .order("created_at", { ascending: false });
+  if (user) query = query.neq("seller_id", user.id);
+  if (searchTerm) query = query.ilike("title", `%${searchTerm}%`);
+  const { data: listingRows, error: listingError } = await query;
 
-export default function Home() {
-  const [showShippingNote, setShowShippingNote] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
-  const [liked, setLiked] = useState({});
+  let listings = listingRows || [];
+  let error = listingError;
+  let favoriteIds = [];
+  let favoriteCounts = {};
 
-  useEffect(() => {
-    const timeout = window.setTimeout(() => setIsLoading(false), 1200);
-    return () => window.clearTimeout(timeout);
-  }, []);
+  if (!error && listings.length) {
+    const listingIds = listings.map(({ id }) => id);
+    const [imagesResult, favoritesResult, countsResult] = await Promise.all([
+      supabase.from("product_images").select("listing_id, image_url").in("listing_id", listingIds),
+      user ? supabase.from("favorites").select("listing_id").eq("user_id", user.id).in("listing_id", listingIds) : Promise.resolve({ data: [], error: null }),
+      supabase.rpc("get_listing_favorite_counts", { listing_ids: listingIds }),
+    ]);
+
+    error = imagesResult.error;
+    if (!error) {
+      const imagesByListing = new Map();
+      for (const image of imagesResult.data || []) {
+        const current = imagesByListing.get(image.listing_id) || [];
+        current.push(image);
+        imagesByListing.set(image.listing_id, current);
+      }
+      favoriteIds = (favoritesResult.data || []).map(({ listing_id }) => listing_id);
+      favoriteCounts = Object.fromEntries((countsResult.data || []).map(({ listing_id, favorite_count }) => [listing_id, Number(favorite_count)]));
+      listings = listings.map((listing) => ({
+        ...listing,
+        product_images: imagesByListing.get(listing.id) || [],
+      }));
+    }
+  }
 
   return (
     <main className={styles.page}>
       <section className={styles.searchSection} aria-label="Søg">
-        <form className={styles.searchForm}>
+        <form className={styles.searchForm} action="/">
           <svg className={styles.searchIcon} viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="10.5" cy="10.5" r="6.5" />
             <path d="M15.5 15.5L21 21" />
           </svg>
-          <label className={styles.visuallyHidden} htmlFor="search">Søg efter artikler eller medlemmer</label>
+          <label className={styles.visuallyHidden} htmlFor="search">Søg efter annoncer</label>
           <input id="search" name="search" type="search" placeholder="Søg efter artikler eller medlemmer" />
           <button className={styles.cameraButton} type="button" aria-label="Søg med billede">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -43,80 +70,27 @@ export default function Home() {
         </form>
       </section>
 
-      <nav className={styles.categories} aria-label="Kategorier">
-        {categories.map((category) => (
-          <button
-            type="button"
-            className={`${styles.category} ${activeCategory === category ? styles.categoryActive : ""}`}
-            aria-pressed={activeCategory === category}
-            onClick={() => setActiveCategory(category)}
-            key={category}
-          >
-            {category}
-          </button>
-        ))}
-      </nav>
-
-      <section className={styles.feed} aria-label="Artikler" aria-busy={isLoading}>
-        {isLoading
-          ? Array.from({ length: 4 }, (_, index) => (
-              <article className={styles.card} key={index} aria-hidden="true">
-                <div className={`${styles.cardImage} ${styles.skeleton}`} />
-                <div className={styles.cardInfo}>
-                  <div className={`${styles.skeletonLine} ${styles.skeletonLineTitle}`} />
-                  <div className={`${styles.skeletonLine} ${styles.skeletonLineMeta}`} />
-                  <div className={`${styles.skeletonLine} ${styles.skeletonLinePrice}`} />
-                </div>
-              </article>
-            ))
-          : products.map((product) => {
-              const isLiked = Boolean(liked[product.id]);
-
-              return (
-                <article className={styles.card} key={product.id}>
-                  <div className={styles.cardImage}>
-                    <img className={styles.listingPhoto} style={product.crop} src="/home/listings.png" alt="" />
-                    {product.favorites !== undefined && (
-                      <button
-                        type="button"
-                        className={`${styles.favorite} ${isLiked ? styles.favoriteActive : ""}`}
-                        aria-pressed={isLiked}
-                        aria-label={isLiked ? "Fjern fra favoritter" : "Gem artikel"}
-                        onClick={() => setLiked((current) => ({ ...current, [product.id]: !isLiked }))}
-                      >
-                        <img src="/home/heart.svg" alt="" width="18.2488" height="18.2488" />
-                        <span>{product.favorites + (isLiked ? 1 : 0)}</span>
-                      </button>
-                    )}
-                  </div>
-                  {product.brand && (
-                    <div className={styles.productDetails}>
-                      <p>{product.brand}</p>
-                      <p>{product.details}</p>
-                      <p className={styles.productPrice}>{product.price}</p>
-                      <p className={styles.productTotal}>
-                        {product.total}
-                        <img src="/home/shield-check.svg" alt="Køberbeskyttelse" width="13.1391" height="13.1391" />
-                      </p>
-                    </div>
-                  )}
-                </article>
-              );
-            })}
-      </section>
-
-      {showShippingNote && (
-        <aside className={styles.shippingNote} role="note">
-          <span>Fragtgebyrer vil blive tilføjet ved betaling.</span>
-          <button
-            type="button"
-            aria-label="Luk besked"
-            onClick={() => setShowShippingNote(false)}
-          >
-            ×
-          </button>
-        </aside>
+      {error ? (
+        <section className={styles.emptyState} role="alert">
+          <h2>Annoncerne kunne ikke hentes</h2>
+          <p>Kontrollér, at RLS-politikkerne for listings, profiles og product_images er sat op i Supabase.</p>
+          {process.env.NODE_ENV === "development" && (
+            <pre className={styles.debugError}>{error.code ? `${error.code}: ` : ""}{error.message}</pre>
+          )}
+        </section>
+      ) : listings?.length ? (
+        <ListingFeed listings={listings} favoriteIds={favoriteIds} favoriteCounts={favoriteCounts} currentUserId={user?.id} />
+      ) : (
+        <section className={styles.emptyState}>
+          <h2>Der er ingen annoncer at vise lige nu</h2>
+          <p>{user ? "Her vises aktive annoncer fra andre medlemmer." : "Opret den første annonce, så bliver den vist her for alle."}</p>
+          <Link className={styles.sellLink} href="/sell">Opret en annonce</Link>
+        </section>
       )}
+
+      <aside className={styles.shippingNote} role="note">
+        <span>Fragtgebyrer vil blive tilføjet ved betaling.</span>
+      </aside>
     </main>
   );
 }

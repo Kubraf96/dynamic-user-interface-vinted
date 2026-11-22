@@ -7,7 +7,7 @@ import styles from "./Header.module.css";
 
 // Routes that render their own full-screen layout without the shared header
 function isHeaderless(pathname) {
-  return pathname === "/" || pathname.startsWith("/inbox/") || pathname.startsWith("/profile/year/");
+  return pathname === "/" || pathname.startsWith("/listing/") || pathname.startsWith("/inbox/") || pathname.startsWith("/profile/year/") || pathname.startsWith("/profile/listings");
 }
 
 function isKnownRoute(pathname) {
@@ -35,6 +35,16 @@ export default function Header({
   if (pathname.startsWith("/profile/orders")) {
     title = "Mine ordrer";
     backHref = pathname === "/profile/orders" ? "/profile" : "/profile/orders";
+  } else if (pathname.startsWith("/profile/listings")) {
+    title = "Mine annoncer";
+    backHref = "/profile";
+  } else if (pathname.startsWith("/profile/favorites")) {
+    title = "Favoritartikler";
+    backHref = "/profile";
+  } else if (pathname === "/sell") {
+    title = "Sælg en artikel";
+    backHref = "/";
+    showArrow = false;
   } else if (pathname === "/profile/balance") {
     title = "Saldo";
     backHref = "/profile";
@@ -76,7 +86,11 @@ export default function Header({
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
-        {showArrow ? (
+        {pathname === "/sell" ? (
+          <Link href="/" className={styles.sellClose} aria-label="Luk">
+            <span aria-hidden="true">×</span>
+          </Link>
+        ) : showArrow ? (
           <Link href={backHref} className={styles.backButton} aria-label="Gå tilbage">
             <img src="/arrow-icon.svg" alt="" />
           </Link>
@@ -85,7 +99,11 @@ export default function Header({
         )}
 
         <h1 className={styles.title}>{title}</h1>
-        <span className={styles.trailingPlaceholder} aria-hidden="true" />
+        {pathname.startsWith("/profile/favorites") ? (
+          <Link href="/?search=" className={styles.headerSearch} aria-label="Søg efter annoncer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5" /></svg>
+          </Link>
+        ) : <span className={styles.trailingPlaceholder} aria-hidden="true" />}
       </div>
     </header>
   );

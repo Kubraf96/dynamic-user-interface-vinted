@@ -1,0 +1,13 @@
+.page { padding-bottom: 3rem; background: #fff; }
+.header { position: sticky; top: 0; z-index: 5; display: grid; height: 4.25rem; grid-template-columns: 3rem 1fr 3rem; align-items: center; padding: 0 1rem; border-bottom: 1px solid #e2e3e3; background: #fff; }
+.header a { color: #171b1c; font-size: 2.7rem; line-height: 1; text-decoration: none; }
+.header h1 { margin: 0; text-align: center; font-size: 1.55rem; font-weight: 600; }
+.form { display: flex; flex-direction: column; gap: 0.65rem; padding: 1.5rem 1rem 1rem; }
+.form h2 { margin: 1.2rem 0 0.35rem; font-size: 1.7rem; }
+.form label { margin-top: 0.5rem; color: #657173; font-size: 1.05rem; }
+.form input:not([type="hidden"]), .form textarea, .form select { width: 100%; min-height: 3.2rem; padding: 0.75rem 0.9rem; border: 1px solid #bac2c2; border-radius: 0.7rem; background: #fff; color: #171b1c; font: inherit; font-size: 1.05rem; }
+.form textarea { min-height: 10rem; resize: vertical; }
+.images { display: flex; gap: 0.75rem; overflow-x: auto; }
+.images img, .addImage { width: 8rem; height: 10rem; flex: 0 0 8rem; border: 1px solid #e1e3e3; border-radius: 0.7rem; object-fit: cover; }
+.addImage { display: grid; place-items: center; border-style: dashed; color: #007f89; font-size: 2rem; }
+.form button { min-height: 3.75rem; margin-top: 1.2rem; border: 0; border-radius: 0.7rem; background: #007f89; color: white; font: inherit; font-size: 1.35rem; font-weight: 600; }

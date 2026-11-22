@@ -13,29 +13,33 @@ async function logIn(formData) {
 
   const email = formData.get("email");
   const password = formData.get("password");
+  const requestedReturnTo = formData.get("returnTo");
+  const returnTo = typeof requestedReturnTo === "string" && requestedReturnTo.startsWith("/") && !requestedReturnTo.startsWith("//")
+    ? requestedReturnTo
+    : "/";
 
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
-  // Something went wrong: back to the form with ?error=true in the URL
+  // Show Supabase's login error on the form so it is visible in the browser.
   if (error) {
     console.error("Supabase login failed:", error.message);
-    redirect("/login?error=true");
+    redirect(`/login?error=${encodeURIComponent(error.message)}`);
   }
 
-  redirect("/");
+  redirect(returnTo);
 }
 
 export default async function LogInPage({ searchParams }) {
-  // ?error=true is set by logIn when Supabase says no
-  const { error, confirmation } = await searchParams;
+  // The login action puts Supabase's error message in the URL.
+  const { error, confirmation, returnTo } = await searchParams;
 
   return (
     <main>
       <h1>Log in</h1>
       {error && (
         <p className="form-error" role="alert">
-          Could not log in. Please check your email and password.
+          Login fejlede: {error}
         </p>
       )}
       {confirmation && (
@@ -44,6 +48,7 @@ export default async function LogInPage({ searchParams }) {
         </p>
       )}
       <form action={logIn} className="auth-form">
+        {returnTo && <input type="hidden" name="returnTo" value={returnTo} />}
         <label htmlFor="email">Email</label>
         <input
           id="email"

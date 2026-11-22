@@ -1,0 +1,38 @@
+.page { min-height: calc(100dvh - 4.75rem); padding: 0 0 6rem; background: #fff; }
+.profileHeader { position: relative; display: flex; height: 4.25rem; align-items: center; justify-content: center; border-bottom: 1px solid #e0e2e2; }
+.profileHeader h1 { margin: 0; font-size: 1.55rem; font-weight: 600; }
+.back { position: absolute; left: 1.1rem; display: grid; width: 2.5rem; height: 2.5rem; align-items: center; }
+.back img { width: 2rem; height: 2rem; }
+.more { position: absolute; right: 1.2rem; border: 0; background: none; color: #171b1c; font-size: 1.5rem; letter-spacing: 0.12em; }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); height: 3.5rem; border-bottom: 2px solid #e1e3e3; }
+.tabs a { display: grid; place-items: center; color: #737879; font-size: 1.15rem; text-decoration: none; }
+.tabs .activeTab { border-bottom: 3px solid #007f89; color: #171b1c; }
+.content { padding: 1.4rem 1rem 1rem; }
+.boostBanner { display: flex; width: 100%; min-height: 5.7rem; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem; border: 0; border-radius: 0.7rem; background: #eaf8f8; color: #5f6b6d; text-align: left; font: inherit; font-size: 1rem; line-height: 1.4; }
+.boostBanner strong { color: #171b1c; font-size: 1.2rem; }
+.chevron { color: #5f6b6d; font-size: 2.5rem; }
+.content h2 { margin: 2.5rem 0 1.25rem; font-size: 1.55rem; font-weight: 600; }
+.filters { display: flex; gap: 0.45rem; margin: 0 -1rem 1.5rem; padding: 0 1rem 0.25rem; overflow-x: auto; scrollbar-width: none; }
+.filters button { flex: 0 0 auto; min-height: 2.5rem; padding: 0.4rem 0.85rem; border: 1px solid #bac2c2; border-radius: 999px; background: white; color: #202526; font: inherit; }
+.filters .selectedFilter { border-color: #007f89; background: #e7f7f7; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem 0.8rem; }
+.card { min-width: 0; }
+.productLink { display: flex; flex-direction: column; color: inherit; text-decoration: none; }
+.productImage, .imagePlaceholder { display: block; width: 100%; aspect-ratio: 0.8; border-radius: 0.65rem; background: #eff2f2; object-fit: cover; }
+.imagePlaceholder { display: grid; place-items: center; color: #657579; }
+.price { margin: 0.45rem 0 0.1rem; color: #171b1c; font-size: 1.25rem; }
+.metric { color: #657173; font-size: 0.95rem; line-height: 1.35; }
+.boostButton { width: 100%; min-height: 2.35rem; margin-top: 0.55rem; border: 1.5px solid #007f89; border-radius: 0.55rem; background: #fff; color: #007f89; font: inherit; }
+.empty { color: #657579; }
+.message, .success { margin: 1rem; color: #bd3219; }
+.success { color: #257b54; }
+/* Kept for the listing editor form. */
+.form { display: flex; flex-direction: column; gap: 0.4rem; }
+.form label { margin-top: 0.5rem; font-weight: 600; }
+.form input, .form textarea, .form select { width: 100%; min-height: 2.75rem; padding: 0.65rem; border: 1px solid #d7d9dc; border-radius: 0.45rem; background: white; color: #1e1e1e; font: inherit; }
+.form textarea { resize: vertical; }
+.form button { min-height: 2.75rem; margin-top: 0.75rem; padding: 0.5rem 1rem; border: 0; border-radius: 0.45rem; background: #008ca1; color: white; font: inherit; font-weight: 600; cursor: pointer; }
+.delete { min-height: 2.5rem; margin-top: 0.45rem; padding: 0.3rem 0.8rem; border: 0; border-radius: 0.45rem; background: #a92d20; color: white; font: inherit; cursor: pointer; }
+.row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+.row > div { display: flex; flex-direction: column; gap: 0.4rem; }
+@media (min-width: 48rem) { .page { max-width: 64rem; margin: 0 auto; } .content { padding-right: 2rem; padding-left: 2rem; } .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
