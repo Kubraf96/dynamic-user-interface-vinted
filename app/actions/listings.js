@@ -37,6 +37,21 @@ export async function createListing(formData) {
     redirect("/sell?error=image");
   }
 
+  const { data: profile, error: profileLookupError } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("id", user.id)
+    .maybeSingle();
+  if (profileLookupError) {
+    redirect(`/sell?error=profile&detail=${encodeURIComponent(profileLookupError.message)}`);
+  }
+  if (!profile) {
+    const { error: profileInsertError } = await supabase.from("profiles").insert({ id: user.id });
+    if (profileInsertError) {
+      redirect(`/sell?error=profile&detail=${encodeURIComponent(profileInsertError.message)}`);
+    }
+  }
+
   const { data: listing, error: listingError } = await supabase
     .from("listings")
     .insert({
@@ -83,14 +98,18 @@ export async function updateListing(formData) {
   const id = readText(formData, "id", 80);
   const title = readText(formData, "title", 120);
   const description = readText(formData, "description", 3000);
+  const category = readText(formData, "category", 80);
+  const brand = readText(formData, "brand", 100);
+  const size = readText(formData, "size", 40);
+  const condition = readText(formData, "condition", 60);
   const price = Number(readText(formData, "price", 20).replace(",", "."));
   const status = readText(formData, "status", 20);
 
-  if (!id || !title || !description || !Number.isFinite(price) || price <= 0 || !["active", "sold"].includes(status)) {
+  if (!id || !title || !description || !category || !Number.isFinite(price) || price <= 0 || !["active", "sold", "reserved", "hidden"].includes(status)) {
     redirect("/profile/listings?error=fields");
   }
 
-  let query = supabase.from("listings").update({ title, description, price, status }).eq("id", id);
+  let query = supabase.from("listings").update({ title, description, price, status, category, brand: brand || null, size: size || null, condition: condition || null }).eq("id", id);
   if (!isAdmin(user.id)) query = query.eq("seller_id", user.id);
   const { error } = await query;
   if (error) {
@@ -100,6 +119,22 @@ export async function updateListing(formData) {
   revalidatePath("/");
   revalidatePath("/profile/listings");
   redirect("/profile/listings?saved=1");
+}
+
+export async function updateListingStatus(id, status) {
+  const supabase = await createClient();
+  const user = await getUserOrRedirect(supabase);
+  if (typeof id !== "string" || !/^[0-9a-f-]{36}$/i.test(id) || !["active", "sold", "reserved", "hidden"].includes(status)) {
+    return { ok: false, message: "Ugyldig ændring." };
+  }
+  let query = supabase.from("listings").update({ status }).eq("id", id);
+  if (!isAdmin(user.id)) query = query.eq("seller_id", user.id);
+  const { data, error } = await query.select("id").maybeSingle();
+  if (error || !data) return { ok: false, message: "Annoncens status kunne ikke ændres." };
+  revalidatePath("/");
+  revalidatePath("/profile/listings");
+  revalidatePath(`/profile/listings/${id}`);
+  return { ok: true };
 }
 
 export async function deleteListing(id) {

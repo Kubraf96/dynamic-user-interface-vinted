@@ -1,0 +1,36 @@
+.page { padding-bottom: 3rem; background: #fff; color: #171b1c; }
+.hero { position: relative; height: min(125vw, 42rem); background: #eef1f1; }
+.hero > img { width: 100%; height: 100%; object-fit: cover; }
+.noImage { display: grid; width: 100%; height: 100%; place-items: center; color: #657579; }
+.back, .more { position: absolute; top: 1rem; display: grid; width: 2.75rem; height: 2.75rem; place-items: center; border: 0; border-radius: 50%; background: rgba(0,0,0,.25); color: #fff; text-decoration: none; }
+.back { left: 1rem; }
+.back img { width: 1.8rem; filter: brightness(0) invert(1); }
+.more { right: 1rem; font-size: 1.35rem; letter-spacing: 0.1em; }
+.imageCount { position: absolute; bottom: 1rem; left: 50%; padding: 0.2rem 0.7rem; border-radius: 999px; background: rgba(0,0,0,.45); color: white; transform: translateX(-50%); }
+.summary { padding: 1.2rem 1rem 0; }
+.summary h1 { margin: 0 0 0.75rem; font-size: 1.55rem; line-height: 1.25; font-weight: 600; }
+.price { margin: 0.8rem 0 0.2rem; font-size: 1.55rem; font-weight: 550; }
+.subtotal { margin: 0; color: #007f89; font-size: 1.1rem; }
+.boost { width: 100%; min-height: 3.6rem; margin-top: 1.25rem; border: 0; border-radius: 0.7rem; background: #007f89; color: white; font: inherit; font-size: 1.35rem; font-weight: 600; }
+.share { display: block; margin: 1rem auto; padding: 0.5rem 1rem; border: 0; background: transparent; color: #5f696a; font: inherit; font-size: 1.2rem; }
+.separator { height: 1rem; background: #eef2f2; }
+.description { padding: 1.7rem 1rem; color: #5f696a; font-size: 1.15rem; }
+.description h2 { font-size: 1.15rem; font-weight: 500; }
+.description p { white-space: pre-wrap; }
+.description dl { margin-top: 1.5rem; }
+.description dl div { display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid #e5e7e7; }
+.description dt { color: #171b1c; }
+.description dd { margin: 0; }
+.message { padding: 0 1rem; color: #bd3219; }
+.scrim { position: fixed; z-index: 100; inset: 0; display: flex; align-items: flex-end; padding: 0.5rem 1rem max(1rem, env(safe-area-inset-bottom)); background: rgba(0,0,0,.25); }
+.actionSheet { width: 100%; overflow: hidden; border-radius: 1.25rem; background: rgba(250,250,250,.96); text-align: center; backdrop-filter: blur(18px); }
+.actionSheet button, .actionSheet a { display: block; width: 100%; min-height: 3.8rem; padding: 1rem; border: 0; border-bottom: 1px solid #d5d8d8; background: transparent; color: #0878ef; font: inherit; font-size: 1.25rem; text-decoration: none; }
+.actionSheet .danger, .confirm .danger { color: #fa443c; }
+.actionSheet .cancel { margin-top: 0.5rem; border: 0; border-radius: 1.2rem; background: white; font-weight: 600; }
+.confirm { width: min(100%, 26rem); margin: auto; padding: 1.25rem; border-radius: 1rem; background: white; text-align: center; }
+.confirm h2 { margin-top: 0; }
+.confirm p { color: #657579; }
+.confirm button { width: 100%; min-height: 3rem; margin-top: 0.5rem; border: 0; border-radius: 0.5rem; background: #f0f2f2; color: #171b1c; font: inherit; }
+.confirm .danger { background: #fff0ef; }
+.status { display: none; }
+@media (min-width: 48rem) { .page { max-width: 48rem; margin: 0 auto; } .hero { height: 36rem; } }

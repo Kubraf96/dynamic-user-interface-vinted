@@ -1,18 +1,51 @@
-.page { padding: 2rem 1.25rem 7rem; }
-.page h1 { font-size: 1.75rem; }
-.intro { margin-bottom: 1.25rem; color: #657579; }
-.form { display: flex; flex-direction: column; gap: 0.45rem; max-width: 38rem; }
-.form label { margin-top: 0.65rem; font-weight: 600; }
-.form input, .form textarea, .form select { width: 100%; min-height: 2.9rem; padding: 0.7rem 0.8rem; border: 1px solid #d7d9dc; border-radius: 0.5rem; background: white; color: #1e1e1e; font: inherit; }
-.form textarea { resize: vertical; }
-.form input[type="file"] { padding: 0.55rem; }
-.form small { color: #657579; }
-.row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
-.row > div { display: flex; flex-direction: column; gap: 0.45rem; }
-.form button { min-height: 3rem; margin-top: 1rem; border: 0; border-radius: 0.5rem; background: #008ca1; color: white; font: inherit; font-weight: 700; cursor: pointer; }
-.form button:disabled { opacity: 0.65; cursor: wait; }
-.error { margin-bottom: 1rem; color: #c83212; }
-.progress { color: #006b78; font-weight: 600; }
-.debug { margin: 0 0 1rem; padding: 0.75rem; overflow-wrap: anywhere; border-radius: 0.5rem; background: #fff3ef; color: #8c260e; font: 0.8rem/1.5 var(--font-geist-mono), monospace; white-space: pre-wrap; }
-.back { display: inline-block; margin-top: 1rem; }
-@media (max-width: 440px) { .row { grid-template-columns: 1fr; } }
+.page {
+  min-height: calc(100dvh - 4.25rem);
+  padding: 1.7rem 1rem 2.5rem;
+  background: #fff;
+}
+.page > .error, .debug { max-width: 42rem; margin: 0 auto 1rem; padding: 0.75rem; overflow-wrap: anywhere; border-radius: 0.5rem; background: #fff3ef; color: #8c260e; }
+.debug { font: 0.8rem/1.5 var(--font-geist-mono), monospace; white-space: pre-wrap; }
+
+.form { display: flex; flex-direction: column; gap: 2rem; max-width: 42rem; margin: 0 auto; }
+.form h2 { margin: 0 0 1rem; color: #171b1c; font-size: 1.7rem; line-height: 1.2; font-weight: 650; }
+.form label { display: block; margin: 0 0 0.45rem; color: #626d6e; font-size: 1.15rem; }
+.form input:not([type="file"]), .form textarea, .form select {
+  width: 100%; min-height: 3.25rem; padding: 0.75rem 0.9rem;
+  border: 1px solid #bac2c2; border-radius: 0.7rem; background: white;
+  color: #202526; font: inherit; font-size: 1.05rem;
+}
+.form input::placeholder, .form textarea::placeholder { color: #697475; opacity: 1; }
+.form textarea { min-height: 10rem; resize: vertical; }
+.photoSection > h2 { margin-bottom: 1.5rem; }
+.photoPicker {
+  display: flex !important; min-height: 8.8rem; align-items: center; justify-content: center;
+  border: 1px dashed #bac2c2; border-radius: 0.8rem; cursor: pointer;
+}
+.photoPicker input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; clip-path: inset(50%); }
+.photoPicker:focus-within { outline: 2px solid #007f89; outline-offset: 3px; }
+.photoButton { display: inline-flex; min-height: 3.2rem; align-items: center; gap: 0.55rem; padding: 0.55rem 1rem; border: 1.5px solid #007f89; border-radius: 0.55rem; color: #007f89; font-size: 1.2rem; font-weight: 500; }
+.photoButton > span { font-size: 1.8rem; line-height: 1; }
+.photoSection small { display: block; margin-top: 0.5rem; color: #657579; }
+.photoName { margin: 0.55rem 0 0; color: #354244; font-size: 0.95rem; overflow-wrap: anywhere; }
+.section { display: flex; flex-direction: column; gap: 0.8rem; }
+.section h2 { margin-bottom: 0.1rem; }
+.accordion { border: 1px solid #e1e3e3; border-radius: 0.75rem; overflow: hidden; }
+.accordion summary { display: flex; min-height: 4rem; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; color: #171b1c; font-size: 1.2rem; cursor: pointer; list-style: none; }
+.accordion summary::-webkit-details-marker { display: none; }
+.plus { color: #626d6e; font-size: 1.8rem; line-height: 1; font-weight: 300; }
+.accordion[open] .plus { transform: rotate(45deg); }
+.accordion select, .priceField { margin: 0 1rem 1rem; width: calc(100% - 2rem) !important; }
+.priceField { position: relative; }
+.priceField input { padding-right: 3.5rem !important; }
+.priceField > span { position: absolute; top: 50%; right: 1rem; transform: translateY(-50%); color: #626d6e; }
+.optionalFields { display: grid; gap: 0.55rem; }
+.visuallyHidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.submit { min-height: 4.3rem; margin-top: 0.25rem; border: 0; border-radius: 0.65rem; background: #007f89; color: #fff; font: inherit; font-size: 1.5rem; font-weight: 600; cursor: pointer; }
+.submit:disabled { opacity: 0.65; cursor: wait; }
+.error { margin: 0; padding: 0.75rem; border-radius: 0.5rem; background: #fff3ef; color: #c83212; }
+.progress { margin: 0; color: #006b78; font-weight: 600; }
+
+@media (min-width: 48rem) {
+  .page { padding: 2rem 2.5rem 3rem; }
+  .form h2 { font-size: 2rem; }
+}

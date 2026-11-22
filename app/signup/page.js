@@ -20,10 +20,10 @@ async function signUp(formData) {
     password,
   });
 
-  // Something went wrong: back to the form with ?error=true in the URL
+  // Show the Auth error on the form so it is clear why signup failed.
   if (error) {
     console.error("Supabase sign-up failed:", error.message);
-    redirect("/signup?error=true");
+    redirect(`/signup?error=${encodeURIComponent(error.message)}`);
   }
 
   if (data.session) {
@@ -34,14 +34,14 @@ async function signUp(formData) {
 }
 
 export default async function SignUpPage({ searchParams }) {
-  // ?error=true is set by signUp when Supabase says no
+  // The signup action places Supabase's error message in the URL.
   const { error } = await searchParams;
   return (
     <main>
       <h1>Sign up</h1>
       {error && (
         <p className="form-error" role="alert">
-          Kunne ikke oprette brugeren. Prøv igen eller brug en anden email.
+          Kunne ikke oprette brugeren: {error}
         </p>
       )}
       <form action={signUp} className="auth-form">

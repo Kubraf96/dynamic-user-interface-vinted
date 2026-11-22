@@ -1,69 +1,51 @@
 "use client";
 
-import { useState } from "react";
-import { deleteListing, updateListing } from "@/app/actions/listings";
+import Link from "next/link";
+import { useMemo, useState } from "react";
 import styles from "@/app/profile/listings/page.module.css";
+
+const filters = [
+  { id: "all", label: "Alle" },
+  { id: "active", label: "Aktiv" },
+  { id: "reserved", label: "Reserveret" },
+  { id: "sold", label: "Solgt" },
+  { id: "hidden", label: "Skjult" },
+];
 
 export default function ManageListings({ initialListings }) {
   const [listings, setListings] = useState(initialListings);
-  const [pendingId, setPendingId] = useState(null);
+  const [filter, setFilter] = useState("active");
   const [message, setMessage] = useState("");
-
-  async function handleDelete(id) {
-    const confirmed = window.confirm("Er du sikker på, at du vil slette annoncen? Den kan ikke gendannes.");
-    if (!confirmed || pendingId) return;
-
-    const previousListings = listings;
-    setMessage("");
-    setPendingId(id);
-    setListings((current) => current.filter((listing) => listing.id !== id));
-
-    try {
-      const result = await deleteListing(id);
-      if (!result?.ok) {
-        setListings(previousListings);
-        setMessage(result?.message || "Annoncen kunne ikke slettes.");
-      } else {
-        setMessage("Annoncen er slettet.");
-      }
-    } catch {
-      setListings(previousListings);
-      setMessage("Der opstod en fejl under sletningen. Annoncen er gendannet i listen.");
-    } finally {
-      setPendingId(null);
-    }
-  }
+  const visibleListings = useMemo(
+    () => filter === "all" ? listings : listings.filter((listing) => listing.status === filter),
+    [filter, listings],
+  );
 
   return (
-    <>
+    <section id="opslag" className={styles.content}>
+      <button className={styles.boostBanner} type="button" onClick={() => setMessage("Boost bliver snart tilgængeligt.")}>
+        <span><strong>Boost din synlighed</strong><br />Gør reklame for dine artikler. Øg dine chancer for at sælge.</span>
+        <span className={styles.chevron} aria-hidden="true">›</span>
+      </button>
       {message && <p className={styles.message} role="status">{message}</p>}
-      {!listings.length && <p>Du har ingen annoncer endnu.</p>}
-      <div className={styles.list}>
-        {listings.map((listing) => (
+      <h2>{listings.length} {listings.length === 1 ? "artikel" : "artikler"}</h2>
+      <div className={styles.filters} aria-label="Filtrer annoncer">
+        {filters.map((item) => <button key={item.id} type="button" className={filter === item.id ? styles.selectedFilter : ""} onClick={() => setFilter(item.id)}>{item.label}</button>)}
+      </div>
+      {!visibleListings.length && <p className={styles.empty}>Der er ingen annoncer i denne kategori.</p>}
+      <div className={styles.grid}>
+        {visibleListings.map((listing) => (
           <article className={styles.card} key={listing.id}>
-            <form action={updateListing} className={styles.form}>
-              <input type="hidden" name="id" value={listing.id} />
-              <label htmlFor={`title-${listing.id}`}>Titel</label>
-              <input id={`title-${listing.id}`} name="title" defaultValue={listing.title} maxLength={120} required />
-              <label htmlFor={`description-${listing.id}`}>Beskrivelse</label>
-              <textarea id={`description-${listing.id}`} name="description" defaultValue={listing.description} rows={3} maxLength={3000} required />
-              <div className={styles.row}>
-                <div><label htmlFor={`price-${listing.id}`}>Pris</label><input id={`price-${listing.id}`} name="price" type="number" min="0.01" step="0.01" defaultValue={listing.price} required /></div>
-                <div><label htmlFor={`status-${listing.id}`}>Status</label><select id={`status-${listing.id}`} name="status" defaultValue={listing.status}><option value="active">Aktiv</option><option value="sold">Solgt</option></select></div>
-              </div>
-              <button type="submit">Gem ændringer</button>
-            </form>
-            <button
-              className={styles.delete}
-              type="button"
-              disabled={pendingId !== null}
-              onClick={() => handleDelete(listing.id)}
-            >
-              {pendingId === listing.id ? "Sletter…" : "Slet annonce"}
-            </button>
+            <Link className={styles.productLink} href={`/profile/listings/${listing.id}`} aria-label={`Se ${listing.title}`}>
+              {listing.imageUrls?.[0] ? <img className={styles.productImage} src={listing.imageUrls[0]} alt={listing.title} /> : <span className={styles.imagePlaceholder}>Intet billede</span>}
+              <span className={styles.price}>{Number(listing.price).toFixed(2).replace(".", ",")} kr.</span>
+              <span className={styles.metric}>Visninger —</span>
+              <span className={styles.metric}>Favoritter —</span>
+            </Link>
+            <button className={styles.boostButton} type="button" onClick={() => setMessage("Boost bliver snart tilgængeligt.")}>Boost</button>
           </article>
         ))}
       </div>
-    </>
+    </section>
   );
 }

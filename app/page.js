@@ -9,6 +9,7 @@ export default async function Home({ searchParams }) {
   const { search = "" } = await searchParams;
   const searchTerm = typeof search === "string" ? search.trim() : "";
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
   let query = supabase
     .from("listings")
     .select(
@@ -16,34 +17,35 @@ export default async function Home({ searchParams }) {
     )
     .eq("status", "active")
     .order("created_at", { ascending: false });
+  if (user) query = query.neq("seller_id", user.id);
   if (searchTerm) query = query.ilike("title", `%${searchTerm}%`);
   const { data: listingRows, error: listingError } = await query;
 
   let listings = listingRows || [];
   let error = listingError;
+  let favoriteIds = [];
+  let favoriteCounts = {};
 
   if (!error && listings.length) {
     const listingIds = listings.map(({ id }) => id);
-    const sellerIds = [...new Set(listings.map(({ seller_id }) => seller_id).filter(Boolean))];
-    const [profilesResult, imagesResult] = await Promise.all([
-      sellerIds.length
-        ? supabase.from("profiles").select("id, username, full_name").in("id", sellerIds)
-        : Promise.resolve({ data: [], error: null }),
+    const [imagesResult, favoritesResult, countsResult] = await Promise.all([
       supabase.from("product_images").select("listing_id, image_url").in("listing_id", listingIds),
+      user ? supabase.from("favorites").select("listing_id").eq("user_id", user.id).in("listing_id", listingIds) : Promise.resolve({ data: [], error: null }),
+      supabase.rpc("get_listing_favorite_counts", { listing_ids: listingIds }),
     ]);
 
-    error = profilesResult.error || imagesResult.error;
+    error = imagesResult.error;
     if (!error) {
-      const profilesById = new Map((profilesResult.data || []).map((profile) => [profile.id, profile]));
       const imagesByListing = new Map();
       for (const image of imagesResult.data || []) {
         const current = imagesByListing.get(image.listing_id) || [];
         current.push(image);
         imagesByListing.set(image.listing_id, current);
       }
+      favoriteIds = (favoritesResult.data || []).map(({ listing_id }) => listing_id);
+      favoriteCounts = Object.fromEntries((countsResult.data || []).map(({ listing_id, favorite_count }) => [listing_id, Number(favorite_count)]));
       listings = listings.map((listing) => ({
         ...listing,
-        profiles: profilesById.get(listing.seller_id) || null,
         product_images: imagesByListing.get(listing.id) || [],
       }));
     }
@@ -77,7 +79,7 @@ export default async function Home({ searchParams }) {
           )}
         </section>
       ) : listings?.length ? (
-        <ListingFeed listings={listings} />
+        <ListingFeed listings={listings} favoriteIds={favoriteIds} favoriteCounts={favoriteCounts} currentUserId={user?.id} />
       ) : (
         <section className={styles.emptyState}>
           <h2>Der er ingen annoncer endnu</h2>

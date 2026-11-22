@@ -25,26 +25,7 @@ on public.profiles for update to authenticated
 using (id = (select auth.uid()))
 with check (id = (select auth.uid()));
 
--- Make a minimal profile row for future Auth signups so seller_id can reference it.
-create or replace function public.create_profile_for_auth_user()
-returns trigger
-language plpgsql
-security definer set search_path = ''
-as $$
-begin
-  insert into public.profiles (id)
-  values (new.id)
-  on conflict (id) do nothing;
-  return new;
-end;
-$$;
-
-drop trigger if exists create_profile_after_auth_signup on auth.users;
-create trigger create_profile_after_auth_signup
-after insert on auth.users
-for each row execute procedure public.create_profile_for_auth_user();
-
--- This trigger does not backfill existing users; it ensures the existing admin row exists.
+-- Ensure Maria's existing Auth user has a profile row.
 insert into public.profiles (id)
 values ('ba74304a-d99e-4055-b1f2-bf55a9a94270'::uuid)
 on conflict (id) do nothing;

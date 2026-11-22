@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import styles from "@/app/page.module.css";
-import { ADMIN_USER_ID } from "@/lib/listing-access";
+import FavoriteButton from "@/components/FavoriteButton";
 
 const defaultCategories = [
   "Alle",
@@ -17,12 +17,7 @@ const defaultCategories = [
   "Sport",
 ];
 
-function sellerName(listing) {
-  const profile = Array.isArray(listing.profiles) ? listing.profiles[0] : listing.profiles;
-  return profile?.username || profile?.full_name || (listing.seller_id === ADMIN_USER_ID ? "Mariaskov12" : "Vinted-medlem");
-}
-
-export default function ListingFeed({ listings }) {
+export default function ListingFeed({ listings, favoriteIds = [], favoriteCounts = {}, showCategories = true, onFavoriteChange, currentUserId = null }) {
   const [activeCategory, setActiveCategory] = useState("Alle");
   const categories = useMemo(() => {
     const fromListings = [...new Set(listings.map((item) => item.category).filter(Boolean))];
@@ -34,7 +29,7 @@ export default function ListingFeed({ listings }) {
 
   return (
     <>
-      <nav className={styles.categories} aria-label="Kategorier">
+      {showCategories && <nav className={styles.categories} aria-label="Kategorier">
         {categories.map((category) => (
           <button
             type="button"
@@ -46,27 +41,27 @@ export default function ListingFeed({ listings }) {
             {category}
           </button>
         ))}
-      </nav>
+      </nav>}
 
       {visibleListings.length ? (
         <section className={styles.feed} aria-label="Annoncer">
           {visibleListings.map((listing) => {
             const images = Array.isArray(listing.product_images) ? listing.product_images : [];
             const imageUrl = images[0]?.image_url;
+            const price = Number(listing.price) || 0;
+            const buyerTotal = price * 1.05 + 5;
             return (
               <article className={styles.card} key={listing.id}>
                 <div className={styles.cardImage}>
-                  {imageUrl ? (
-                    <img className={styles.listingPhoto} src={imageUrl} alt={listing.title} />
-                  ) : (
-                    <div className={styles.noPhoto}>Intet billede</div>
-                  )}
+                  {imageUrl ? <img className={styles.listingPhoto} src={imageUrl} alt={listing.title} /> : <div className={styles.noPhoto}>Intet billede</div>}
+                  {listing.seller_id !== currentUserId && <FavoriteButton listingId={listing.id} initialFavorite={favoriteIds.includes(listing.id)} initialCount={favoriteCounts[listing.id] || 0} onChange={onFavoriteChange} />}
                 </div>
                 <div className={styles.productDetails}>
-                  <p className={styles.seller}>{sellerName(listing)}</p>
                   <p className={styles.title}>{listing.title}</p>
-                  <p>{[listing.brand, listing.size, listing.condition].filter(Boolean).join(" · ")}</p>
-                  <p className={styles.productPrice}>{Number(listing.price).toLocaleString("da-DK", { style: "currency", currency: "DKK" })}</p>
+                  <p>{[listing.size, listing.condition].filter(Boolean).join(" · ")}</p>
+                  {listing.status === "sold" && <span className={styles.soldBadge}>Solgt</span>}
+                  <p className={styles.productPrice}>{price.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr.</p>
+                  <p className={styles.productTotal}>{buyerTotal.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr. inkl. <img src="/home/shield-check.svg" alt="" /></p>
                 </div>
               </article>
             );

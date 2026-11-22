@@ -1,0 +1,4 @@
+.page { min-height: calc(100dvh - 9.5rem); padding: 0.5rem 0 6rem; background: #fff; }
+.error { margin: 1rem; padding: 0.8rem; border-radius: 0.5rem; background: #fff3ef; color: #982b18; }
+.empty { padding: 3rem 1rem; color: #657579; text-align: center; }
+.empty h2 { color: #171b1c; font-size: 1.3rem; }
