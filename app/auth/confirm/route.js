@@ -12,6 +12,7 @@ export async function GET(request) {
   if (code) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      await saveSignupUsername(supabase);
       return NextResponse.redirect(new URL(next, request.url));
     }
   }
@@ -22,9 +23,26 @@ export async function GET(request) {
       type,
     });
     if (!error) {
+      await saveSignupUsername(supabase);
       return NextResponse.redirect(new URL(next, request.url));
     }
   }
 
   return NextResponse.redirect(new URL("/login?error=true", request.url));
+}
+
+async function saveSignupUsername(supabase) {
+  const { data: { user } } = await supabase.auth.getUser();
+  const username = user?.user_metadata?.username;
+
+  if (!user || typeof username !== "string" || !username) return;
+
+  const { error } = await supabase.from("profiles").upsert(
+    { id: user.id, username },
+    { onConflict: "id", ignoreDuplicates: true },
+  );
+
+  if (error) {
+    console.error("Supabase profile creation after confirmation failed:", error.message);
+  }
 }

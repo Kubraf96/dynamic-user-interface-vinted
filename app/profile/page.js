@@ -25,12 +25,26 @@ export default async function ProfilePage() {
     redirect("/login");
   }
 
+  const supabase = await createClient();
+  const { data: { user: authUser }, error: authUserError } = await supabase.auth.getUser();
+  if (authUserError || !authUser) redirect("/login");
+
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("username")
+    .eq("id", authUser.id)
+    .maybeSingle();
+  if (profileError) {
+    console.error("Profile card could not read profiles.username:", profileError.message);
+  }
+  const displayName = profile?.username || authUser.user_metadata?.username || authUser.user_metadata?.name || "Medlem";
+
   return (
     <main className={styles.page}>
       <section className={styles.profileCard}>
         <div className={styles.avatar} aria-hidden="true" />
         <div>
-          <h1>{user.user_metadata?.name || user.email || ""}</h1>
+          <h1>{displayName}</h1>
           <p>Se mine opslag</p>
         </div>
       </section>
