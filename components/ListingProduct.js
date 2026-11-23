@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import FavoriteButton from "./FavoriteButton.js";
 import ListingFeed from "./ListingFeed.js";
 import styles from "./ListingProduct.module.css";
@@ -9,13 +9,27 @@ import styles from "./ListingProduct.module.css";
 export default function ListingProduct({ listing, seller, sellerListings, favoriteIds, favoriteCounts, currentUserId }) {
   const [photoIndex, setPhotoIndex] = useState(0);
   const [notice, setNotice] = useState("");
+  const touchStartX = useRef(null);
   const photos = listing.imageUrls || [];
   const price = Number(listing.price) || 0;
   const total = price * 1.05 + 5;
   const username = seller?.username || seller?.full_name || "Vinted-medlem";
 
+  function handleTouchEnd(event) {
+    if (touchStartX.current === null || photos.length < 2) return;
+    const deltaX = event.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(deltaX) < 40) return;
+    setPhotoIndex((index) => Math.max(0, Math.min(photos.length - 1, index + (deltaX < 0 ? 1 : -1))));
+  }
+
   return <main className={styles.page}>
-    <section className={styles.gallery}>
+    <section
+      className={styles.gallery}
+      onTouchStart={(event) => { touchStartX.current = event.touches[0]?.clientX ?? null; }}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={() => { touchStartX.current = null; }}
+    >
       {photos[photoIndex] ? <img className={styles.photo} src={photos[photoIndex]} alt={listing.title} /> : <div className={styles.noPhoto}>Intet billede</div>}
       <Link href="/" className={styles.back} aria-label="Tilbage"><img src="/arrow-icon.svg" alt="" /></Link>
       {currentUserId !== listing.seller_id && <FavoriteButton listingId={listing.id} initialFavorite={favoriteIds.includes(listing.id)} initialCount={favoriteCounts[listing.id] || 0} />}

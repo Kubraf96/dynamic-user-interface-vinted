@@ -9,11 +9,19 @@
 .section input, .section textarea, .section select { width: 100%; min-height: 3.25rem; padding: .8rem 1rem; border: 1px solid #b8c0c1; border-radius: .7rem; background: white; color: #171717; font: inherit; }
 .section textarea { min-height: 9rem; resize: vertical; }
 .section small { color: #657579; }
-.upload { display: grid; min-height: 13rem; overflow: hidden; place-items: center; border: 1px dashed #bac2c2; border-radius: .8rem; color: #007f8c !important; cursor: pointer; }
+.imageGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.imageGridEmpty .upload { grid-column: 1 / -1; aspect-ratio: auto; min-height: 13rem; }
+.imageTile, .upload { position: relative; display: grid; aspect-ratio: 1 / 1; min-width: 0; overflow: hidden; place-items: center; border-radius: .8rem; }
+.imageTile { background: #f2f5f5; }
+.imageTile img { width: 100%; height: 100%; object-fit: cover; }
+.primaryBadge { position: absolute; bottom: .5rem; left: .5rem; padding: .25rem .65rem; border-radius: 999px; background: white; color: #606d70; font-size: .85rem; }
+.removeImage { position: absolute; top: .45rem; right: .45rem; display: grid; width: 2rem; height: 2rem; place-items: center; border: 0; border-radius: 50%; background: white; color: #171717; box-shadow: 0 1px 5px #0003; font: inherit; font-size: 1.5rem; line-height: 1; cursor: pointer; }
+.upload { min-height: 8rem; padding: .5rem; border: 1px dashed #bac2c2; background: white; color: #007f8c !important; cursor: pointer; }
+.uploadMore { color: #606d70 !important; }
+.cameraIcon { width: 3.5rem; height: 3.5rem; }
 .upload span { display: flex; align-items: center; gap: .5rem; padding: .6rem 1rem; border: 1px solid #007f8c; border-radius: .6rem; font-size: 1.2rem; }
 .upload b { font-size: 1.6rem; font-weight: 400; }
-.upload img { width: 100%; height: 15rem; object-fit: contain; }
-.upload input { display: none; }
+.fileInput { display: none; }
 .error { margin: 0; color: #c33; }
 .submit { min-height: 3.5rem; border: 0; border-radius: .65rem; background: #008391; color: white; font: inherit; font-weight: 700; cursor: pointer; }
 .submit:disabled { opacity: .65; cursor: wait; }

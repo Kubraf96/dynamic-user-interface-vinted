@@ -2,8 +2,8 @@
 -- Creates the public image bucket and the listing/image policies used by the app.
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values ('listing-images', 'listing-images', true, 5242880,
-        array['image/jpeg', 'image/png', 'image/webp', 'image/avif'])
+values ('listing-images', 'listing-images', true, 10485760,
+        array['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/heic', 'image/heif'])
 on conflict (id) do update
 set public = excluded.public,
     file_size_limit = excluded.file_size_limit,

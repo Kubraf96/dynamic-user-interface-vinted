@@ -48,6 +48,11 @@ export default async function ProfilePage() {
 
       <nav className={styles.menu} aria-label="Profilmenu">
         <ProfileMenuItem
+          label="Mine annoncer"
+          icon="/profile-icons/order-icon.svg"
+          href="/profile/listings"
+        />
+        <ProfileMenuItem
           label="Favoritartikler"
           icon="/profile-icons/main-icon.svg"
           href="/profile/favorites"
