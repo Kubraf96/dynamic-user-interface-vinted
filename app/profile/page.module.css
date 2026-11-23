@@ -1,0 +1,70 @@
+.page {
+  min-height: calc(100vh - 9rem);
+  padding: 2.5rem 1.5rem 7rem;
+  background: #fff;
+}
+
+.identity {
+  max-width: 28rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.avatar {
+  display: grid;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 0 auto 1rem;
+  place-items: center;
+  border-radius: 50%;
+  background: #dff4f4;
+  color: #007f8c;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.identity h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+}
+
+.identity p {
+  margin: 0;
+  color: #657579;
+}
+
+.menu {
+  max-width: 34rem;
+  margin: 2rem auto 0;
+  border-top: 1px solid #e3e7e7;
+}
+
+.menu a {
+  display: flex;
+  min-height: 3.75rem;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e3e7e7;
+  color: #1e2526;
+  font-size: 1.05rem;
+  text-decoration: none;
+}
+
+.menu a span:last-child { color: #657579; font-size: 1.8rem; }
+
+.form {
+  max-width: 24rem;
+  margin: 2rem auto;
+}
+
+.form button {
+  width: 100%;
+  min-height: 3rem;
+  border: 0;
+  border-radius: 0.55rem;
+  background: #008ca1;
+  color: white;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}

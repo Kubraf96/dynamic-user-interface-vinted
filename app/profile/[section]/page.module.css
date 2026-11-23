@@ -1,0 +1,4 @@
+.page { min-height: 75vh; padding: 1rem 1rem 7rem; background: #fff; }
+.back { display: inline-block; margin-bottom: 1rem; color: #007f8c; text-decoration: none; }
+.page h1 { margin: 0 0 1rem; font-size: 1.75rem; }
+.message { padding: 2rem 1rem; color: #657579; text-align: center; }

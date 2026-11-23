@@ -15,11 +15,29 @@ async function logIn(formData) {
   const password = formData.get("password");
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   // Something went wrong: back to the form with ?error=true in the URL
   if (error) {
     redirect("/login?error=true");
+  }
+
+  const username = data.user?.user_metadata?.username;
+  if (data.user && typeof username === "string" && username) {
+    const { data: profile, error: profileLookupError } = await supabase
+      .from("profiles")
+      .select("id,username")
+      .eq("id", data.user.id)
+      .maybeSingle();
+    if (profileLookupError) {
+      console.error("Profile lookup after login failed:", profileLookupError.message);
+    } else if (!profile?.username) {
+      const { error: profileError } = await supabase.from("profiles").upsert(
+        { id: data.user.id, username },
+        { onConflict: "id" },
+      );
+      if (profileError) console.error("Profile save after login failed:", profileError.message);
+    }
   }
 
   redirect("/");

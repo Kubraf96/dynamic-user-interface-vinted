@@ -15,6 +15,8 @@ export const bottomNavItems = [
 export default function BottomNav() {
   const pathname = usePathname();
 
+  if (pathname.startsWith("/listing/")) return null;
+
   return (
     <nav className={styles.nav} aria-label="Primær navigation">
       {bottomNavItems.map((item) => {
