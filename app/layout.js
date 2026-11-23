@@ -32,8 +32,8 @@ const arimo = Arimo({
 });
 
 export const metadata = {
-  title: "Supabase Auth",
-  description: "A Next.js app with sign up, log in and a protected profile page using Supabase Auth",
+  title: "Dynamic User Interface Examen - Vinted App",
+  description: "A school project for the Dynamic User Interface course, simulating a Vinted-like application made memorable without breaking it.",
 };
 
 export default function RootLayout({ children }) {
